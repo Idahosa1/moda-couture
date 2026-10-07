@@ -14,6 +14,7 @@
   const paramCart = urlParams.get('cart');
   const paramMobileNav = urlParams.get('mobileNav');
   const paramConsultation = urlParams.get('consultation');
+  const paramCheckout = urlParams.get('checkout');
 
   // State Management
   const state = {
@@ -852,6 +853,11 @@
       setTimeout(() => toggleMobileNav(true), 150);
     } else if (paramConsultation === 'open') {
       setTimeout(() => openConsultationModal(), 150);
+    } else if (paramCheckout === 'open') {
+      if (state.cart.length === 0 && products.length > 0) {
+        addToCart(products[0], '40R', false);
+      }
+      setTimeout(() => openCheckout(), 150);
     }
   });
 

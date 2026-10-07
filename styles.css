@@ -1755,13 +1755,16 @@ main {
   -webkit-backdrop-filter: blur(8px);
   z-index: 150;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 2rem 1rem;
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--duration-overlay) var(--ease-out), visibility var(--duration-overlay) var(--ease-out);
+  box-sizing: border-box;
 }
 
 .checkout-modal-overlay.open {
@@ -1772,13 +1775,17 @@ main {
 .checkout-card {
   background-color: var(--bg-surface);
   width: 100%;
-  max-width: 680px;
+  max-width: 640px;
   max-height: 90dvh;
+  margin: auto;
   border-radius: 4px;
   border: 1px solid var(--border-subtle);
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
   padding: 2.25rem;
   position: relative;
+  box-sizing: border-box;
   transform: scale(0.95);
   opacity: 0;
   transition: transform var(--duration-overlay) var(--ease-out), opacity var(--duration-overlay) var(--ease-out);
@@ -1792,23 +1799,35 @@ main {
   padding: 2.25rem;
 }
 
-.consultation-form-wrap {
+/* Unified Form Layouts for Consultation & Order Checkout */
+.consultation-form-wrap,
+.checkout-form-wrap {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   width: 100%;
+  max-width: 100%;
   gap: 0.85rem;
+  box-sizing: border-box;
 }
 
-.consultation-form-wrap .form-field {
+.consultation-form-wrap .form-field,
+.checkout-form-wrap .form-field {
   width: 100%;
   flex: 1 1 100%;
   margin-bottom: 0;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .consultation-form-wrap .form-field input,
 .consultation-form-wrap .form-field select,
-.consultation-form-wrap .form-field textarea {
+.consultation-form-wrap .form-field textarea,
+.checkout-form-wrap .form-field input,
+.checkout-form-wrap .form-field select,
+.checkout-form-wrap .form-field textarea {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
 }
 
@@ -1821,6 +1840,8 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-field {
@@ -1828,6 +1849,10 @@ main {
   flex-direction: column;
   gap: 0.35rem;
   margin-bottom: 1rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .form-field label {
@@ -2222,5 +2247,19 @@ main {
   }
   .pdp-modal {
     max-height: 95dvh;
+  }
+  .checkout-modal-overlay {
+    padding: 1rem 0.65rem;
+    overflow-x: hidden;
+  }
+  .checkout-card {
+    padding: 1.5rem 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  #consultationOverlay .checkout-card {
+    padding: 1.5rem 1rem;
   }
 }

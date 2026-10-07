@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=2.4-font-cleanup" />
+  <link rel="stylesheet" href="styles.css?v=2.5-checkout-refinement" />
 
   <style>
     /* Direct High-Specificity Enforcement for Jakarta Sans ExtraBold */
@@ -522,12 +522,12 @@
   <!-- CHECKOUT MODAL -->
   <div id="checkoutOverlay" class="checkout-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
     <div class="checkout-card">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-        <div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 0.75rem; width: 100%;">
+        <div style="min-width: 0; flex: 1;">
           <span class="mono-tag" style="color: var(--terracotta); font-size: 0.72rem; font-weight: 600;">MODA ATELIER CHECKOUT</span>
-          <h2 id="checkoutTitle" style="font-size: 1.6rem;">Order Dispatch Details</h2>
+          <h2 id="checkoutTitle" style="font-size: clamp(1.25rem, 4vw, 1.6rem); word-break: break-word;">Order Dispatch Details</h2>
         </div>
-        <button id="checkoutCloseBtn" class="btn-icon" aria-label="Close checkout">
+        <button id="checkoutCloseBtn" class="btn-icon" aria-label="Close checkout" style="flex-shrink: 0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="6"></line>
@@ -535,33 +535,31 @@
         </button>
       </div>
 
-      <form id="checkoutForm">
-        <div class="form-group-grid">
-          <div class="form-field">
-            <label for="checkoutName">Full Name</label>
-            <input type="text" id="checkoutName" required placeholder="Dr. Adewale Balogun" />
-          </div>
-          <div class="form-field">
-            <label for="checkoutEmail">Email Address</label>
-            <input type="email" id="checkoutEmail" required placeholder="adewale@example.com" />
-          </div>
+      <form id="checkoutForm" class="checkout-form-wrap">
+        <div class="form-field">
+          <label for="checkoutName">Full Name</label>
+          <input type="text" id="checkoutName" required placeholder="Dr. Adewale Balogun" />
         </div>
 
-        <div class="form-group-grid">
-          <div class="form-field">
-            <label for="checkoutPhone">Phone Number / WhatsApp</label>
-            <input type="tel" id="checkoutPhone" required placeholder="+234 803 000 0000" />
-          </div>
-          <div class="form-field">
-            <label for="checkoutCountry">Delivery Country</label>
-            <select id="checkoutCountry" required>
-              <option value="NG">Nigeria (Nationwide Express)</option>
-              <option value="UK">United Kingdom (DHL Express 3-Day)</option>
-              <option value="US">United States & Canada</option>
-              <option value="GH">Ghana</option>
-              <option value="OTHER">Other International Destination</option>
-            </select>
-          </div>
+        <div class="form-field">
+          <label for="checkoutEmail">Email Address</label>
+          <input type="email" id="checkoutEmail" required placeholder="adewale@example.com" />
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutPhone">Phone Number / WhatsApp</label>
+          <input type="tel" id="checkoutPhone" required placeholder="+234 803 000 0000" />
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutCountry">Delivery Country</label>
+          <select id="checkoutCountry" required>
+            <option value="NG">Nigeria (Nationwide Express)</option>
+            <option value="UK">United Kingdom (DHL Express 3-Day)</option>
+            <option value="US">United States & Canada</option>
+            <option value="GH">Ghana</option>
+            <option value="OTHER">Other International Destination</option>
+          </select>
         </div>
 
         <div class="form-field">
@@ -574,15 +572,15 @@
           <textarea id="checkoutNotes" rows="2" placeholder="e.g. Please hem trousers to 41 inches, sleeve length 25.5 inches..."></textarea>
         </div>
 
-        <div style="background-color: var(--bg-secondary); border-radius: 4px; padding: 1.15rem; margin-bottom: 1.5rem; border: 1px solid var(--border-subtle);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <div style="background-color: var(--bg-secondary); border-radius: 4px; padding: 1.15rem; margin-bottom: 1.5rem; border: 1px solid var(--border-subtle); box-sizing: border-box; width: 100%; max-width: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.35rem;">
             <span style="font-size: 0.825rem; font-weight: 600;">Payment Gateway:</span>
             <span style="font-size: 0.775rem; color: var(--terracotta); font-weight: 700;">Paystack / Flutterwave / Cards</span>
           </div>
-          <p style="font-size: 0.775rem; color: var(--text-secondary);">
+          <p style="font-size: 0.775rem; color: var(--text-secondary); text-wrap: pretty;">
             Supports Nigerian Naira cards, Bank Transfers, USSD, Apple Pay, Visa, and Mastercard globally.
           </p>
-          <div style="margin-top: 0.75rem; font-size: 0.95rem; font-weight: 700; display: flex; justify-content: space-between;">
+          <div style="margin-top: 0.75rem; font-size: 0.95rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
             <span>Amount Due:</span>
             <span id="checkoutSummaryPrice" class="tabular-nums" style="color: var(--text-primary);">₦0</span>
           </div>
