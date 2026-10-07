@@ -1,0 +1,7 @@
+# Local development and automation scripts
+*.ps1
+screenshots/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

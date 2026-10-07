@@ -1,0 +1,858 @@
+/**
+ * MODA COUTURE — Interactive E-Commerce & Atelier Application
+ * Craft Standards: Emil Kowalski & Jakub Krehel
+ */
+
+(function () {
+  'use strict';
+
+  // Parse URL Search Parameters for testing & deep-linking
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramTheme = urlParams.get('theme');
+  const paramCurrency = urlParams.get('currency');
+  const paramProduct = urlParams.get('product');
+  const paramCart = urlParams.get('cart');
+  const paramMobileNav = urlParams.get('mobileNav');
+  const paramConsultation = urlParams.get('consultation');
+
+  // State Management
+  const state = {
+    currency: paramCurrency || localStorage.getItem('moda_currency') || 'NGN',
+    theme: paramTheme || localStorage.getItem('moda_theme') || 'light',
+    activeCategory: 'all',
+    searchQuery: '',
+    sortBy: 'featured',
+    cart: JSON.parse(localStorage.getItem('moda_cart') || '[]'),
+    selectedProduct: null,
+    selectedSize: null,
+    isBespokeFitting: false,
+    selectedGalleryImageIndex: 0
+  };
+
+  // Products Database
+  const products = [
+    {
+      id: 'senator-01',
+      name: 'The Lagos Senator 01',
+      category: 'senator',
+      categoryLabel: 'Senator Suit',
+      priceNGN: 185000,
+      priceUSD: 125,
+      tag: 'Signature Piece',
+      fabric: 'Super 140s Italian Wool & Silk Blend',
+      cut: 'Tailored Slim Structured Fit',
+      description: 'Handcrafted in our Lagos atelier, the Lagos Senator 01 reimagines traditional Nigerian authority through sharp contemporary lines. Features a concealed front placket, mandarin collar, and our signature geometric terracotta needlework across the left breast.',
+      images: [
+        'assets/images/senator_black.jpg',
+        'assets/images/senator_detail.jpg',
+        'assets/images/senator_midnight.jpg'
+      ],
+      sizes: ['38R', '40R', '42R', '44L', '46L'],
+      details: [
+        'Concealed placket with genuine horn buttons',
+        'Minimalist geometric terracotta embroidery',
+        'Matching tapered trousers with side adjusters',
+        'Full breathable silk-viscose lining'
+      ]
+    },
+    {
+      id: 'fila-01',
+      name: 'Royal Noir Velvet Fila Cap',
+      category: 'fila',
+      categoryLabel: 'Handcrafted Fila',
+      priceNGN: 45000,
+      priceUSD: 32,
+      tag: 'Handcrafted',
+      fabric: 'Plush Obsidian Velvet & Metallic Thread',
+      cut: 'Traditional Gobi Folded Silhouette',
+      description: 'An iconic crown of Yoruba heritage, meticulously hand-embroidered with spiraling geometric motifs using gold and bronze metallic thread. Crafted from dense luxury velvet that retains its architectural shape effortlessly.',
+      images: [
+        'assets/images/fila_black.jpg',
+        'assets/images/fila_terracotta.jpg'
+      ],
+      sizes: ['56cm', '58cm', '60cm', '62cm'],
+      details: [
+        'Traditional Yoruba Gobi pleat style',
+        'Hand-guided bullion wire embroidery',
+        'Padded sweatband for all-day comfort',
+        'Moda Couture archival edition'
+      ]
+    },
+    {
+      id: 'agbada-01',
+      name: 'The Eko Sovereign Agbada Robe',
+      category: 'agbada',
+      categoryLabel: 'Grand Agbada',
+      priceNGN: 340000,
+      priceUSD: 230,
+      tag: 'Couture Atelier',
+      fabric: 'High-Twist Wool Crepe & Silk Weave',
+      cut: 'Architectural Drape 3-Piece Set',
+      description: 'The pinnacle of ceremonial presence. The Eko Sovereign Agbada features sculpted shoulder geometry that cascades naturally down the torso. Complete with internal tailored vest, tunic, and tapered trousers.',
+      images: [
+        'assets/images/agbada_noir.jpg',
+        'assets/images/agbada_runway.jpg',
+        'assets/images/senator_detail.jpg'
+      ],
+      sizes: ['38R', '40R', '42R', '44L', '46L'],
+      details: [
+        '3-piece ensemble: Agbada, Awotele (Tunic), Sokoto (Trousers)',
+        'Geometric chest medallion with tone-on-tone embroidery',
+        'Weighted hemline for flawless runway drape',
+        'Accommodates bespoke shoulder alterations'
+      ]
+    },
+    {
+      id: 'senator-02',
+      name: 'The Sahara Ivory Senator Suit',
+      category: 'senator',
+      categoryLabel: 'Senator Suit',
+      priceNGN: 195000,
+      priceUSD: 135,
+      tag: 'New Season',
+      fabric: 'Swiss Cashmere-Cotton & Terracotta Silk',
+      cut: 'Contemporary Modernist Cut',
+      description: 'A striking departure in warm ivory cream, balanced with refined terracotta piping along the stand collar, placket, and cuff edges. Designed for day receptions, galas, and summer international soirees.',
+      images: [
+        'assets/images/senator_cream.jpg',
+        'assets/images/senator_detail.jpg',
+        'assets/images/senator_black.jpg'
+      ],
+      sizes: ['38R', '40R', '42R', '44L', '46L'],
+      details: [
+        'Ivory double-faced breathable Swiss cotton-cashmere',
+        'Terracotta silk piping along placket & cuffs',
+        'Hand-stitched covered buttons',
+        'Trousers with clean flat front & curtain waistband'
+      ]
+    },
+    {
+      id: 'fila-02',
+      name: 'Terracotta Rust Aso-Oke Fila',
+      category: 'fila',
+      categoryLabel: 'Handcrafted Fila',
+      priceNGN: 52000,
+      priceUSD: 36,
+      tag: 'Artisanal Weave',
+      fabric: 'Handwoven Nigerian Aso-Oke Cloth',
+      cut: 'Sculpted Peak Silhouette',
+      description: 'Woven on traditional wooden looms in Iseyin, Oyo State, this Fila cap pairs natural rust terracotta cotton with obsidian black pinstripes and metallic gold accents. Each piece carries subtle weaver markings.',
+      images: [
+        'assets/images/fila_terracotta.jpg',
+        'assets/images/fila_black.jpg'
+      ],
+      sizes: ['56cm', '58cm', '60cm', '62cm'],
+      details: [
+        '100% authentic handwoven Yoruba Aso-Oke',
+        'Metallic gold threading woven directly into the selvedge',
+        'Breathable natural cotton structure',
+        'Can be folded to the left or right'
+      ]
+    },
+    {
+      id: 'senator-03',
+      name: 'Signature Asymmetrical Senator',
+      category: 'senator',
+      categoryLabel: 'Senator Suit',
+      priceNGN: 210000,
+      priceUSD: 145,
+      tag: 'Atelier Limited',
+      fabric: 'Super 160s Worsted Charcoal Wool',
+      cut: 'Slim Atelier Cut',
+      description: 'Designed for the sartorial connoisseur. An asymmetrical geometric embroidery pattern sweeps across the left chest and collar in muted bronze and terracotta hues, creating a sharp graphic statement against pitch-black fabric.',
+      images: [
+        'assets/images/senator_midnight.jpg',
+        'assets/images/senator_detail.jpg',
+        'assets/images/senator_black.jpg'
+      ],
+      sizes: ['38R', '40R', '42R', '44L', '46L'],
+      details: [
+        'Super 160s worsted wool from Biella, Italy',
+        'Intricate multi-directional needle embroidery',
+        'Discreet zipped side vent for smooth sitting drape',
+        'Hand-finished hem and cuff buttons'
+      ]
+    },
+    {
+      id: 'agbada-02',
+      name: 'Moda Runway Grand Agbada',
+      category: 'agbada',
+      categoryLabel: 'Grand Agbada',
+      priceNGN: 380000,
+      priceUSD: 260,
+      tag: 'Runway Edition',
+      fabric: 'Structured Damask & Silk Brocade',
+      cut: 'Monumental Flow Silhouette',
+      description: 'First debuted at Lagos Fashion Week, this runway piece combines traditional Yoruba royalty with stark minimalism. The weighted drape ensures the sleeves stay dramatically perched on the shoulders during motion.',
+      images: [
+        'assets/images/agbada_runway.jpg',
+        'assets/images/agbada_noir.jpg',
+        'assets/images/fila_black.jpg'
+      ],
+      sizes: ['38R', '40R', '42R', '44L', '46L'],
+      details: [
+        'Signature runway proportion with broad architectural wingspan',
+        'Includes complimentary hand-embroidered velvet Fila',
+        'Deep side slits for effortless stride',
+        'Hand-stitched by senior master tailors'
+      ]
+    },
+    {
+      id: 'bespoke-01',
+      name: 'Bespoke Made-to-Measure Commission',
+      category: 'bespoke',
+      categoryLabel: 'Bespoke Atelier',
+      priceNGN: 225000,
+      priceUSD: 155,
+      tag: 'Bespoke Only',
+      fabric: 'Custom Client Selection (Wool/Silk/Cashmere)',
+      cut: 'Individually Drafted Pattern',
+      description: 'Work directly with our master cutters to create an entirely bespoke Senator or Agbada set drafted from your unique 14-point body measurements. Includes custom geometric chest embroidery designed specifically for you.',
+      images: [
+        'assets/images/senator_detail.jpg',
+        'assets/images/senator_black.jpg',
+        'assets/images/agbada_noir.jpg'
+      ],
+      sizes: ['Bespoke Fit'],
+      details: [
+        '14 individual anatomical measurements drafted on paper',
+        'Direct consultation with Moda Head Tailor',
+        'Personalized initials embroidered inside placket',
+        'Guaranteed fit with complimentary adjustments'
+      ]
+    }
+  ];
+
+  // Helper: Format Price
+  function formatPrice(priceNGN, priceUSD) {
+    if (state.currency === 'USD') {
+      return `$${priceUSD.toLocaleString('en-US')}`;
+    }
+    return `₦${priceNGN.toLocaleString('en-NG')}`;
+  }
+
+  // Toast Notification System
+  function showToast(message, icon = 'check') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `
+      <span class="toast-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </span>
+      <span>${message}</span>
+    `;
+
+    container.appendChild(toast);
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 250);
+    }, 2800);
+  }
+
+  // Theme Toggling
+  function initTheme() {
+    document.documentElement.setAttribute('data-theme', state.theme);
+    updateThemeToggleIcons();
+  }
+
+  function toggleTheme() {
+    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('moda_theme', state.theme);
+    document.documentElement.setAttribute('data-theme', state.theme);
+    updateThemeToggleIcons();
+    showToast(`Switched to ${state.theme === 'dark' ? 'Dark Noir' : 'Light Atelier'} theme`);
+  }
+
+  function updateThemeToggleIcons() {
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    if (!sunIcon || !moonIcon) return;
+
+    if (state.theme === 'dark') {
+      sunIcon.style.display = 'block';
+      moonIcon.style.display = 'none';
+    } else {
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = 'block';
+    }
+  }
+
+  // Currency Toggling
+  function setCurrency(currency) {
+    if (state.currency === currency) return;
+    state.currency = currency;
+    localStorage.setItem('moda_currency', currency);
+
+    document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.currency === currency);
+    });
+
+    renderCatalog();
+    renderCart();
+    if (state.selectedProduct) {
+      updatePdpPrice();
+    }
+
+    showToast(`Currency updated to ${currency === 'NGN' ? 'Nigerian Naira (₦)' : 'US Dollar ($)'}`);
+  }
+
+  // Render Catalog Grid
+  function renderCatalog() {
+    const grid = document.getElementById('productGrid');
+    if (!grid) return;
+
+    let filtered = products.filter(p => {
+      const matchesCat = state.activeCategory === 'all' || p.category === state.activeCategory;
+      const matchesSearch = !state.searchQuery ||
+        p.name.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
+        p.fabric.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
+        p.description.toLowerCase().includes(state.searchQuery.toLowerCase());
+      return matchesCat && matchesSearch;
+    });
+
+    if (state.sortBy === 'price-asc') {
+      filtered.sort((a, b) => (state.currency === 'USD' ? a.priceUSD - b.priceUSD : a.priceNGN - b.priceNGN));
+    } else if (state.sortBy === 'price-desc') {
+      filtered.sort((a, b) => (state.currency === 'USD' ? b.priceUSD - a.priceUSD : b.priceNGN - a.priceNGN));
+    }
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
+          <p style="font-size: 1.25rem; font-family: 'Playfair Display', serif; margin-bottom: 0.5rem;">No items found matching your selection.</p>
+          <p style="font-size: 0.85rem;">Try refining your keywords or selecting another category.</p>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(product => `
+      <article class="product-card" data-product-id="${product.id}">
+        <div class="product-card-img-container">
+          <span class="product-tag-pill">${product.tag}</span>
+          <img src="${product.images[0]}" alt="${product.name}" loading="lazy" />
+          <div class="product-quick-view-overlay">
+            <button class="quick-view-btn" data-product-id="${product.id}">
+              Inspect Piece
+            </button>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-category-meta">${product.categoryLabel}</span>
+          <h3 class="product-title">${product.name}</h3>
+          <span class="product-spec">${product.fabric}</span>
+          <div class="product-price-row">
+            <span class="product-price tabular-nums">${formatPrice(product.priceNGN, product.priceUSD)}</span>
+            <span class="product-bespoke-badge">${product.cut}</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    // Attach card click handlers for fluid modal expansion
+    grid.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const id = card.dataset.productId;
+        openProductModal(id);
+      });
+    });
+  }
+
+  // Open Product Modal (PDP) with Outfit.hellohello.is inspired smooth transition
+  function openProductModal(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    state.selectedProduct = product;
+    state.selectedSize = product.sizes[0];
+    state.isBespokeFitting = false;
+    state.selectedGalleryImageIndex = 0;
+
+    const modal = document.getElementById('pdpOverlay');
+    const imgEl = document.getElementById('pdpMainImage');
+    const titleEl = document.getElementById('pdpTitle');
+    const catEl = document.getElementById('pdpCategory');
+    const descEl = document.getElementById('pdpDesc');
+    const fabricEl = document.getElementById('pdpFabric');
+    const cutEl = document.getElementById('pdpCut');
+    const thumbsContainer = document.getElementById('pdpThumbs');
+    const sizeContainer = document.getElementById('pdpSizesList');
+    const detailsContainer = document.getElementById('pdpDetailsList');
+    const bespokeCheckbox = document.getElementById('pdpBespokeCheck');
+
+    if (bespokeCheckbox) bespokeCheckbox.checked = false;
+
+    titleEl.textContent = product.name;
+    catEl.textContent = `${product.categoryLabel} • Atelier Collection`;
+    descEl.textContent = product.description;
+    fabricEl.textContent = product.fabric;
+    cutEl.textContent = product.cut;
+    imgEl.src = product.images[0];
+    imgEl.alt = product.name;
+
+    updatePdpPrice();
+
+    // Render Thumbnails
+    thumbsContainer.innerHTML = product.images.map((img, idx) => `
+      <button class="pdp-thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}">
+        <img src="${img}" alt="${product.name} view ${idx + 1}" />
+      </button>
+    `).join('');
+
+    thumbsContainer.querySelectorAll('.pdp-thumb-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const index = parseInt(btn.dataset.index, 10);
+        state.selectedGalleryImageIndex = index;
+        imgEl.src = product.images[index];
+        thumbsContainer.querySelectorAll('.pdp-thumb-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Render Sizes
+    sizeContainer.innerHTML = product.sizes.map((sz, idx) => `
+      <button class="size-pill ${idx === 0 ? 'active' : ''}" data-size="${sz}">${sz}</button>
+    `).join('');
+
+    sizeContainer.querySelectorAll('.size-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.selectedSize = btn.dataset.size;
+        sizeContainer.querySelectorAll('.size-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Render Tailoring Details
+    detailsContainer.innerHTML = product.details.map(d => `
+      <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.825rem; color: var(--text-secondary);">
+        <span style="color: var(--terracotta);">•</span>
+        <span>${d}</span>
+      </li>
+    `).join('');
+
+    // Open with animation
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updatePdpPrice() {
+    const priceEl = document.getElementById('pdpPrice');
+    if (!priceEl || !state.selectedProduct) return;
+    priceEl.textContent = formatPrice(state.selectedProduct.priceNGN, state.selectedProduct.priceUSD);
+  }
+
+  function closeProductModal() {
+    const modal = document.getElementById('pdpOverlay');
+    if (!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Cart Management
+  function addToCart(product, size, isBespoke) {
+    const existingIndex = state.cart.findIndex(item =>
+      item.id === product.id && item.size === size && item.isBespoke === isBespoke
+    );
+
+    if (existingIndex > -1) {
+      state.cart[existingIndex].quantity += 1;
+    } else {
+      state.cart.push({
+        id: product.id,
+        name: product.name,
+        priceNGN: product.priceNGN,
+        priceUSD: product.priceUSD,
+        image: product.images[0],
+        size: size,
+        isBespoke: isBespoke,
+        quantity: 1
+      });
+    }
+
+    saveCart();
+    renderCart();
+    updateCartBadge();
+    showToast(`Added ${product.name} (${size}) to Shopping Bag`);
+  }
+
+  function updateCartQuantity(index, delta) {
+    if (!state.cart[index]) return;
+    state.cart[index].quantity += delta;
+    if (state.cart[index].quantity <= 0) {
+      state.cart.splice(index, 1);
+    }
+    saveCart();
+    renderCart();
+    updateCartBadge();
+  }
+
+  function removeCartItem(index) {
+    state.cart.splice(index, 1);
+    saveCart();
+    renderCart();
+    updateCartBadge();
+  }
+
+  function saveCart() {
+    localStorage.setItem('moda_cart', JSON.stringify(state.cart));
+  }
+
+  function updateCartBadge() {
+    const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+    const badges = document.querySelectorAll('.cart-badge');
+    badges.forEach(b => {
+      b.textContent = count;
+      b.style.display = count > 0 ? 'inline-flex' : 'none';
+    });
+  }
+
+  function renderCart() {
+    const list = document.getElementById('cartItemsList');
+    const subtotalEl = document.getElementById('cartSubtotal');
+    const totalEl = document.getElementById('cartTotal');
+    const meterFill = document.getElementById('cartMeterFill');
+    const meterText = document.getElementById('cartMeterText');
+
+    if (!list) return;
+
+    if (state.cart.length === 0) {
+      list.innerHTML = `
+        <div class="cart-empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <h4 class="cart-empty-title">Your shopping bag is empty</h4>
+          <p class="cart-empty-text">Explore our collection of African Senator suits, Royal Agbadas, and handcrafted Fila caps.</p>
+        </div>
+      `;
+      if (subtotalEl) subtotalEl.textContent = formatPrice(0, 0);
+      if (totalEl) totalEl.textContent = formatPrice(0, 0);
+      if (meterFill) meterFill.style.width = '0%';
+      if (meterText) meterText.textContent = 'Complimentary shipping applies on orders over ₦200,000 / $150';
+      return;
+    }
+
+    const subtotalNGN = state.cart.reduce((sum, item) => sum + item.priceNGN * item.quantity, 0);
+    const subtotalUSD = state.cart.reduce((sum, item) => sum + item.priceUSD * item.quantity, 0);
+
+    list.innerHTML = state.cart.map((item, idx) => `
+      <div class="cart-item-card">
+        <div class="cart-item-thumb">
+          <img src="${item.image}" alt="${item.name}" />
+        </div>
+        <div class="cart-item-info">
+          <h4 class="cart-item-title">${item.name}</h4>
+          <span class="cart-item-meta">Size: ${item.size} ${item.isBespoke ? '• Bespoke Made-to-Measure' : ''}</span>
+          <span class="cart-item-price tabular-nums">${formatPrice(item.priceNGN * item.quantity, item.priceUSD * item.quantity)}</span>
+          <div class="cart-qty-ctrls">
+            <button class="qty-btn" data-action="dec" data-index="${idx}">−</button>
+            <span class="qty-display tabular-nums">${item.quantity}</span>
+            <button class="qty-btn" data-action="inc" data-index="${idx}">+</button>
+          </div>
+        </div>
+        <button class="btn-icon" data-action="remove" data-index="${idx}" style="min-width: 32px; min-height: 32px; border: none;" title="Remove item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    `).join('');
+
+    // Quantity events
+    list.querySelectorAll('.qty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.index, 10);
+        const action = btn.dataset.action;
+        updateCartQuantity(idx, action === 'inc' ? 1 : -1);
+      });
+    });
+
+    list.querySelectorAll('[data-action="remove"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.index, 10);
+        removeCartItem(idx);
+      });
+    });
+
+    if (subtotalEl) subtotalEl.textContent = formatPrice(subtotalNGN, subtotalUSD);
+    if (totalEl) totalEl.textContent = formatPrice(subtotalNGN, subtotalUSD);
+
+    // Free Shipping Progress (Threshold: ₦200,000 or $150)
+    const threshold = state.currency === 'USD' ? 150 : 200000;
+    const currentVal = state.currency === 'USD' ? subtotalUSD : subtotalNGN;
+    const progress = Math.min(100, Math.round((currentVal / threshold) * 100));
+
+    if (meterFill) meterFill.style.width = `${progress}%`;
+    if (meterText) {
+      if (progress >= 100) {
+        meterText.innerHTML = `🎉 <strong>Complimentary express shipping unlocked!</strong>`;
+      } else {
+        const diff = threshold - currentVal;
+        const diffStr = state.currency === 'USD' ? `$${diff}` : `₦${diff.toLocaleString()}`;
+        meterText.textContent = `Add ${diffStr} more to unlock complimentary global shipping.`;
+      }
+    }
+  }
+
+  function toggleCart(open) {
+    const overlay = document.getElementById('cartOverlay');
+    const drawer = document.getElementById('cartDrawer');
+    if (!overlay || !drawer) return;
+
+    if (open) {
+      overlay.classList.add('open');
+      drawer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      overlay.classList.remove('open');
+      drawer.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Checkout Modal
+  function openCheckout() {
+    if (state.cart.length === 0) {
+      showToast('Your bag is empty. Please select an item first.');
+      return;
+    }
+    toggleCart(false);
+    const checkoutModal = document.getElementById('checkoutOverlay');
+    if (!checkoutModal) return;
+
+    const subtotalNGN = state.cart.reduce((sum, item) => sum + item.priceNGN * item.quantity, 0);
+    const subtotalUSD = state.cart.reduce((sum, item) => sum + item.priceUSD * item.quantity, 0);
+    const summaryEl = document.getElementById('checkoutSummaryPrice');
+    if (summaryEl) summaryEl.textContent = formatPrice(subtotalNGN, subtotalUSD);
+
+    checkoutModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCheckout() {
+    const checkoutModal = document.getElementById('checkoutOverlay');
+    if (!checkoutModal) return;
+    checkoutModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function completeOrder(e) {
+    e.preventDefault();
+    const orderNum = 'MODA-' + Math.floor(100000 + Math.random() * 900000);
+    const nameInput = document.getElementById('checkoutName');
+    const customerName = nameInput ? nameInput.value : 'Valued Patron';
+
+    closeCheckout();
+    state.cart = [];
+    saveCart();
+    renderCart();
+    updateCartBadge();
+
+    // Show Confirmation Dialog
+    const confirmOverlay = document.getElementById('orderConfirmationOverlay');
+    const confirmOrderNum = document.getElementById('confirmOrderNumber');
+    const confirmPatronName = document.getElementById('confirmPatronName');
+
+    if (confirmOrderNum) confirmOrderNum.textContent = orderNum;
+    if (confirmPatronName) confirmPatronName.textContent = customerName;
+    if (confirmOverlay) confirmOverlay.classList.add('open');
+  }
+
+  // Bespoke Fitting Consultation Modal
+  function openConsultationModal() {
+    const modal = document.getElementById('consultationOverlay');
+    if (modal) {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeConsultationModal() {
+    const modal = document.getElementById('consultationOverlay');
+    if (modal) {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function submitConsultation(e) {
+    e.preventDefault();
+    closeConsultationModal();
+    showToast('Consultation request received! Our master tailor will contact you via WhatsApp.');
+  }
+
+  function toggleMobileNav(open) {
+    const overlay = document.getElementById('mobileNavOverlay');
+    const drawer = document.getElementById('mobileNavDrawer');
+    if (!overlay || !drawer) return;
+
+    if (open) {
+      overlay.classList.add('open');
+      drawer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      overlay.classList.remove('open');
+      drawer.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Initialize Event Listeners
+  function initEvents() {
+    // Mobile Navigation Drawer
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => toggleMobileNav(true));
+    document.getElementById('mobileNavCloseBtn')?.addEventListener('click', () => toggleMobileNav(false));
+    document.getElementById('mobileNavOverlay')?.addEventListener('click', () => toggleMobileNav(false));
+    document.querySelectorAll('.mobile-filter-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const cat = link.dataset.category;
+        if (cat) {
+          state.activeCategory = cat;
+          document.querySelectorAll('.filter-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.category === cat);
+          });
+          renderCatalog();
+        }
+        toggleMobileNav(false);
+      });
+    });
+    document.getElementById('mobileBookFittingBtn')?.addEventListener('click', () => {
+      toggleMobileNav(false);
+      openConsultationModal();
+    });
+
+    // Theme toggle
+    document.getElementById('themeToggleBtn')?.addEventListener('click', toggleTheme);
+
+    // Currency toggles
+    document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => setCurrency(btn.dataset.currency));
+    });
+
+    // Category filter pills
+    document.querySelectorAll('.filter-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.activeCategory = btn.dataset.category;
+        renderCatalog();
+      });
+    });
+
+    // Search input
+    document.getElementById('catalogSearchInput')?.addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      renderCatalog();
+    });
+
+    // Sort select
+    document.getElementById('catalogSortSelect')?.addEventListener('change', (e) => {
+      state.sortBy = e.target.value;
+      renderCatalog();
+    });
+
+    // Cart trigger & drawer
+    document.getElementById('cartTriggerBtn')?.addEventListener('click', () => toggleCart(true));
+    document.getElementById('cartCloseBtn')?.addEventListener('click', () => toggleCart(false));
+    document.getElementById('cartOverlay')?.addEventListener('click', () => toggleCart(false));
+
+    // PDP Modal close & Add to bag
+    document.getElementById('pdpCloseBtn')?.addEventListener('click', closeProductModal);
+    document.getElementById('pdpOverlay')?.addEventListener('click', (e) => {
+      if (e.target.id === 'pdpOverlay') closeProductModal();
+    });
+
+    // Bespoke toggle checkbox inside PDP
+    document.getElementById('pdpBespokeCheck')?.addEventListener('change', (e) => {
+      state.isBespokeFitting = e.target.checked;
+      const note = document.getElementById('bespokeSelectedNote');
+      if (note) note.style.display = e.target.checked ? 'block' : 'none';
+    });
+
+    // Add to Bag Button
+    document.getElementById('pdpAddToBagBtn')?.addEventListener('click', () => {
+      if (!state.selectedProduct) return;
+      addToCart(state.selectedProduct, state.selectedSize || 'Standard', state.isBespokeFitting);
+      closeProductModal();
+      toggleCart(true);
+    });
+
+    // Checkout Triggers
+    document.getElementById('cartCheckoutBtn')?.addEventListener('click', openCheckout);
+    document.getElementById('checkoutCloseBtn')?.addEventListener('click', closeCheckout);
+    document.getElementById('checkoutOverlay')?.addEventListener('click', (e) => {
+      if (e.target.id === 'checkoutOverlay') closeCheckout();
+    });
+    document.getElementById('checkoutForm')?.addEventListener('submit', completeOrder);
+
+    // Order confirmation close
+    document.getElementById('orderConfirmCloseBtn')?.addEventListener('click', () => {
+      document.getElementById('orderConfirmationOverlay')?.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+
+    // Consultation booking
+    document.getElementById('bookFittingBtn')?.addEventListener('click', openConsultationModal);
+    document.getElementById('consultationCloseBtn')?.addEventListener('click', closeConsultationModal);
+    document.getElementById('consultationOverlay')?.addEventListener('click', (e) => {
+      if (e.target.id === 'consultationOverlay') closeConsultationModal();
+    });
+    document.getElementById('consultationForm')?.addEventListener('submit', submitConsultation);
+
+    // Keyboard navigation (Escape to close modals)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeProductModal();
+        toggleCart(false);
+        toggleMobileNav(false);
+        closeCheckout();
+        closeConsultationModal();
+        document.getElementById('orderConfirmationOverlay')?.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // DOM Content Loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    initEvents();
+
+    // Sync currency buttons
+    document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.currency === state.currency);
+    });
+
+    renderCatalog();
+    renderCart();
+    updateCartBadge();
+
+    // Check deep-linked product modal
+    if (paramProduct) {
+      setTimeout(() => openProductModal(paramProduct), 100);
+    } else if (paramCart === 'open') {
+      if (state.cart.length === 0 && products.length > 0) {
+        addToCart(products[0], '40R', false);
+      }
+      setTimeout(() => toggleCart(true), 150);
+    } else if (paramMobileNav === 'open') {
+      setTimeout(() => toggleMobileNav(true), 150);
+    } else if (paramConsultation === 'open') {
+      setTimeout(() => openConsultationModal(), 150);
+    }
+  });
+
+})();

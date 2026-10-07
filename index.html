@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MODA COUTURE — Luxury African Senator Wears & Bespoke Menswear</title>
+  <meta name="description" content="Moda Couture — Contemporary African luxury menswear atelier. Tailored Senator suits, Grand Agbada robes, and handcrafted Aso-Oke Fila caps. Lagos • London • Worldwide." />
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css?v=2.4-font-cleanup" />
+
+  <style>
+    /* Direct High-Specificity Enforcement for Jakarta Sans ExtraBold */
+    .hero-monumental-wordmark {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.04em !important;
+    }
+    .wordmark-logo {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.22em !important;
+    }
+    /* Universal Form Control Font Reset - Strictly Plus Jakarta Sans */
+    button, input, select, textarea, optgroup, option {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+    input::placeholder, textarea::placeholder {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+    #catalogSearchInput, #catalogSortSelect {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar (Infinite Smooth Scrolling) -->
+  <div class="announcement-bar" role="region" aria-label="Announcements">
+    <div class="announcement-track">
+      <div class="announcement-content">
+        <span class="announcement-pill">● ATELIER DISPATCH</span>
+        <span>COMPLIMENTARY SHIPPING ON ORDERS OVER ₦200,000 / $150</span>
+        <span class="announcement-separator">•</span>
+        <span>BESPOKE FITTINGS AT VICTORIA ISLAND, LAGOS & MAYFAIR, LONDON ATELIERS</span>
+        <span class="announcement-separator">•</span>
+        <span>NEW SEASON: THE OBSIDIAN & TERRACOTTA COLLECTION</span>
+        <span class="announcement-separator">•</span>
+        <span>HANDCRAFTED SENATOR SUITS & ASO-OKE FILA CAPS</span>
+        <span class="announcement-separator">•</span>
+      </div>
+      <div class="announcement-content" aria-hidden="true">
+        <span class="announcement-pill">● ATELIER DISPATCH</span>
+        <span>COMPLIMENTARY SHIPPING ON ORDERS OVER ₦200,000 / $150</span>
+        <span class="announcement-separator">•</span>
+        <span>BESPOKE FITTINGS AT VICTORIA ISLAND, LAGOS & MAYFAIR, LONDON ATELIERS</span>
+        <span class="announcement-separator">•</span>
+        <span>NEW SEASON: THE OBSIDIAN & TERRACOTTA COLLECTION</span>
+        <span class="announcement-separator">•</span>
+        <span>HANDCRAFTED SENATOR SUITS & ASO-OKE FILA CAPS</span>
+        <span class="announcement-separator">•</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Main Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <!-- Mobile Navigation Hamburger Toggle (<= 992px) -->
+      <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open mobile navigation menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#catalogSection" class="nav-link active">Collections</a>
+        <a href="#catalogSection" class="nav-link" data-cat="senator">Senator Suits</a>
+        <a href="#catalogSection" class="nav-link" data-cat="agbada">Grand Agbada</a>
+        <a href="#catalogSection" class="nav-link" data-cat="fila">Fila Caps</a>
+        <a href="#editorialSection" class="nav-link">Lookbook</a>
+      </nav>
+
+      <!-- Wordmark Logo -->
+      <a href="#" class="brand-wordmark" aria-label="Moda Couture Home">
+        <span class="wordmark-logo">MODA</span>
+        <span class="wordmark-subtitle">COUTURE • ATELIER</span>
+      </a>
+
+      <!-- Actions: Currency, Theme, Cart -->
+      <div class="header-actions">
+        <!-- Currency Switcher Toggle -->
+        <div class="toggle-group" role="group" aria-label="Currency Selector">
+          <button class="toggle-option currency-toggle-btn active" data-currency="NGN" aria-label="Nigerian Naira">
+            <span class="currency-full">NGN </span>₦
+          </button>
+          <button class="toggle-option currency-toggle-btn" data-currency="USD" aria-label="US Dollar">
+            <span class="currency-full">USD </span>$
+          </button>
+        </div>
+
+        <!-- Theme Toggle (Outfit Inspired) -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle light and dark theme">
+          <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Cart Trigger Button -->
+        <button id="cartTriggerBtn" class="cart-trigger-btn" aria-label="View shopping bag">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-label">Bag</span>
+          <span class="cart-badge" style="display:none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER (Sliding with Emil Kowalski physics) -->
+  <div id="mobileNavOverlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+    <div class="mobile-nav-header">
+      <div class="brand-wordmark" style="align-items: flex-start;">
+        <span class="wordmark-logo" style="font-size: 1.6rem; letter-spacing: 0.22em;">MODA</span>
+        <span class="wordmark-subtitle" style="font-size: 0.55rem; letter-spacing: 0.25em;">COUTURE • ATELIER</span>
+      </div>
+      <button id="mobileNavCloseBtn" class="btn-icon" aria-label="Close navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mobile-nav-links">
+      <a href="#catalogSection" class="mobile-nav-item mobile-filter-link" data-category="all">
+        <span>All Collections</span>
+        <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
+      </a>
+      <a href="#catalogSection" class="mobile-nav-item mobile-filter-link" data-category="senator">
+        <span>Senator Suits</span>
+        <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
+      </a>
+      <a href="#catalogSection" class="mobile-nav-item mobile-filter-link" data-category="agbada">
+        <span>Grand Agbada</span>
+        <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
+      </a>
+      <a href="#catalogSection" class="mobile-nav-item mobile-filter-link" data-category="fila">
+        <span>Handcrafted Fila</span>
+        <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
+      </a>
+      <a href="#catalogSection" class="mobile-nav-item mobile-filter-link" data-category="bespoke">
+        <span>Bespoke Atelier</span>
+        <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
+      </a>
+      <a href="#editorialSection" class="mobile-nav-item">
+        <span>Lookbook & Heritage</span>
+        <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
+      </a>
+    </nav>
+
+    <div class="mobile-nav-footer">
+      <button id="mobileBookFittingBtn" class="btn-cta" style="width: 100%;">
+        <span>Book Bespoke Fitting</span>
+      </button>
+      <div class="mobile-nav-info">
+        <p><strong>Lagos Flagship:</strong> Victoria Island, Lagos</p>
+        <p><strong>London Atelier:</strong> Mayfair, London W1</p>
+        <p style="color: var(--terracotta); font-weight: 600; margin-top: 0.35rem;">WhatsApp: +234 (0) 812 888 MODA</p>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <!-- MONUMENTAL EDITORIAL HERO (Inspired by Outfit.hellohello.is) -->
+    <section class="hero-editorial-section">
+      <!-- Masthead Metadata -->
+      <div class="hero-masthead-meta">
+        <div class="masthead-left">VOL. 01 / AW26 • AFRICAN TAILORING ARCHITECTURE</div>
+        <div class="masthead-center">LAGOS 6.5244° N • LONDON 51.5074° N</div>
+        <div class="masthead-right tabular-nums">SUPER 140S OBSIDIAN WOOL • ASO-OKE</div>
+      </div>
+
+      <!-- Monumental MODA Bold Typography Headline -->
+      <div class="hero-monumental-bar">
+        <h1 class="hero-monumental-wordmark">MODA</h1>
+        <div class="hero-title-subline">
+          <span>ATELIER & BESPOKE MENSWEAR</span>
+          <span style="color: var(--terracotta);">HAUTE COUTURE AFRICANA</span>
+          <span>LAGOS — LONDON — NEW YORK</span>
+        </div>
+      </div>
+
+      <!-- Editorial Triad Lookbook Grid (Outfit Inspired, No CTAs) -->
+      <div class="hero-editorial-grid">
+        <div class="hero-editorial-panel main-portrait">
+          <div class="editorial-img-wrap">
+            <img src="assets/images/senator_black.jpg" alt="The Lagos Senator 01 in Obsidian and Terracotta" />
+          </div>
+          <div class="panel-caption">
+            <span class="caption-idx">LOOK 01</span>
+            <span class="caption-name">The Lagos Senator 01</span>
+            <span class="caption-detail">Obsidian Wool • Terracotta Chest Placket</span>
+          </div>
+        </div>
+
+        <div class="hero-editorial-panel craft-macro">
+          <div class="editorial-img-wrap">
+            <img src="assets/images/senator_detail.jpg" alt="Atelier Needlework & Concealed Placket Craft" />
+          </div>
+          <div class="panel-caption">
+            <span class="caption-idx">CRAFT</span>
+            <span class="caption-name">Concealed Placket Finishing</span>
+            <span class="caption-detail">Hand-stitched Geometric Terracotta Silk Motif</span>
+          </div>
+        </div>
+
+        <div class="hero-editorial-panel still-crown">
+          <div class="editorial-img-wrap">
+            <img src="assets/images/fila_black.jpg" alt="Royal Noir Velvet Handcrafted Fila Cap" />
+          </div>
+          <div class="panel-caption">
+            <span class="caption-idx">CROWN</span>
+            <span class="caption-name">Royal Noir Velvet Fila</span>
+            <span class="caption-detail">Traditional Gobi Silhouette • Metallic Embroidery</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee Runway Ticker (Outfit Inspired) -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-content">
+        <span>SENATOR SUITS</span>
+        <span>•</span>
+        <span>ASO-OKE FILA CAPS</span>
+        <span>•</span>
+        <span>SUPER 140S LUXURY WOOL</span>
+        <span>•</span>
+        <span>LAGOS ATELIER HANDCRAFT</span>
+        <span>•</span>
+        <span>TERRACOTTA & OBSIDIAN</span>
+        <span>•</span>
+        <span>CONCEALED PLACKETS</span>
+        <span>•</span>
+        <span>GRAND AGBADA ROBES</span>
+        <span>•</span>
+        <span>BESPOKE CUTTING</span>
+        <span>•</span>
+        <span>SENATOR SUITS</span>
+        <span>•</span>
+        <span>ASO-OKE FILA CAPS</span>
+        <span>•</span>
+        <span>SUPER 140S LUXURY WOOL</span>
+        <span>•</span>
+        <span>LAGOS ATELIER HANDCRAFT</span>
+      </div>
+    </div>
+
+    <!-- PRODUCT CATALOG (Inspired by Adina Buzatu) -->
+    <section id="catalogSection" class="catalog-section">
+      <div class="catalog-header">
+        <div class="catalog-header-top">
+          <div class="catalog-title-group">
+            <span class="mono-tag" style="font-size: 0.75rem; color: var(--terracotta); font-weight: 600;">CURATED SELECTION</span>
+            <h2>The Atelier Collection</h2>
+            <p>Impeccable African Senator wears, Grand Agbadas, and ceremonial Fila caps tailored to distinction.</p>
+          </div>
+          <button id="bookFittingBtn" class="btn-secondary" style="font-size: 0.775rem; padding: 0.65rem 1.25rem;">
+            <span>Consult With Master Cutter</span>
+          </button>
+        </div>
+
+        <div class="catalog-controls">
+          <!-- Category Filter Pills -->
+          <div class="filter-categories" role="tablist">
+            <button class="filter-pill active" data-category="all">All Pieces</button>
+            <button class="filter-pill" data-category="senator">Senator Suits</button>
+            <button class="filter-pill" data-category="agbada">Grand Agbada</button>
+            <button class="filter-pill" data-category="fila">Fila Caps</button>
+            <button class="filter-pill" data-category="bespoke">Bespoke Atelier</button>
+          </div>
+
+          <!-- Sort and Search -->
+          <div class="catalog-sort-search">
+            <div class="search-input-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input id="catalogSearchInput" type="text" placeholder="Search cloth, cut, style..." aria-label="Search collection" />
+            </div>
+
+            <select id="catalogSortSelect" class="sort-select" aria-label="Sort products">
+              <option value="featured">Featured Curations</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Minimal Product Grid -->
+      <div id="productGrid" class="product-grid" aria-live="polite">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- LOOKBOOK & HERITAGE EDITORIAL SECTION -->
+    <section id="editorialSection" class="editorial-section">
+      <div class="editorial-container">
+        <div class="editorial-image-frame">
+          <img src="assets/images/agbada_runway.jpg" alt="Moda Couture Runway Editorial" />
+        </div>
+        <div class="editorial-text-col">
+          <span class="mono-tag" style="color: var(--terracotta); font-weight: 700; font-size: 0.8rem;">HERITAGE & CRAFT MANIFESTO</span>
+          <h2>The Senator Suit as Modern Sovereign Armor</h2>
+          <p>
+            Born along the Niger Delta and elevated across Lagos high society, the Senator wear is the undisputed modern sartorial signature of the African gentleman. It replaces Western conventions with regal band collars, concealed plackets, and geometric chest embroidery inspired by ancestral motifs.
+          </p>
+          <p>
+            At Moda Couture, every piece begins with hand-selected Super 140s Italian wool, Swiss voile cotton, or handwoven Aso-Oke cloth. We cut each garment by hand in our Lagos workshop, ensuring sharp shoulder balance, smooth armhole movement, and trousers that drape without break onto handcrafted leather footwear.
+          </p>
+
+          <div style="display: flex; gap: 2rem; margin-top: 1rem;">
+            <div>
+              <strong style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; display: block;" class="tabular-nums">100%</strong>
+              <span style="font-size: 0.775rem; color: var(--text-muted); text-transform: uppercase;">Handcrafted In Lagos</span>
+            </div>
+            <div>
+              <strong style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; display: block;" class="tabular-nums">7-10 Days</strong>
+              <span style="font-size: 0.775rem; color: var(--text-muted); text-transform: uppercase;">Bespoke Delivery Window</span>
+            </div>
+            <div>
+              <strong style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; display: block;" class="tabular-nums">48 Hours</strong>
+              <span style="font-size: 0.775rem; color: var(--text-muted); text-transform: uppercase;">Ready-To-Wear Dispatch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PRODUCT DETAIL MODAL (PDP) — Outfit.hellohello.is inspired smooth transition -->
+  <div id="pdpOverlay" class="pdp-overlay" role="dialog" aria-modal="true" aria-labelledby="pdpTitle">
+    <div class="pdp-modal">
+      <button id="pdpCloseBtn" class="pdp-close-btn" aria-label="Close product view">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- PDP Gallery -->
+      <div class="pdp-gallery">
+        <div class="pdp-main-image-wrap">
+          <img id="pdpMainImage" src="" alt="Product View" />
+        </div>
+        <div id="pdpThumbs" class="pdp-thumbnails">
+          <!-- Thumbnails injected via JS -->
+        </div>
+      </div>
+
+      <!-- PDP Details Scroll -->
+      <div class="pdp-details-scroll">
+        <div class="pdp-header-meta">
+          <span id="pdpCategory" class="pdp-category-tag">Senator Suit • Atelier Collection</span>
+          <h2 id="pdpTitle" class="pdp-title">The Lagos Senator 01</h2>
+          <div class="pdp-price-tag tabular-nums" id="pdpPrice">₦185,000</div>
+          <span class="pdp-tax-note">Taxes and worldwide duties calculated at checkout</span>
+        </div>
+
+        <p id="pdpDesc" class="pdp-description">
+          Exquisite tailored African Senator suit with geometric terracotta chest embroidery.
+        </p>
+
+        <!-- Tailoring Specification Box -->
+        <div class="pdp-specs-box">
+          <div class="pdp-spec-item">
+            <span class="pdp-spec-label">Cloth & Weave</span>
+            <span id="pdpFabric" class="pdp-spec-val">Super 140s Italian Wool</span>
+          </div>
+          <div class="pdp-spec-item">
+            <span class="pdp-spec-label">Cut & Silhouette</span>
+            <span id="pdpCut" class="pdp-spec-val">Structured Modern Tailoring</span>
+          </div>
+          <div class="pdp-spec-item">
+            <span class="pdp-spec-label">Atelier Origin</span>
+            <span class="pdp-spec-val">Victoria Island, Lagos</span>
+          </div>
+          <div class="pdp-spec-item">
+            <span class="pdp-spec-label">Placket Finishing</span>
+            <span class="pdp-spec-val">Concealed Mother-of-Pearl</span>
+          </div>
+        </div>
+
+        <!-- Size Selector -->
+        <div class="pdp-size-section">
+          <div class="pdp-size-header">
+            <span class="pdp-size-title">Select Sizing (UK / US / Nigeria)</span>
+            <button class="pdp-size-guide-btn" onclick="alert('Moda Sizing Guide:\n38R: Chest 38-40in | Waist 32in\n40R: Chest 40-42in | Waist 34in\n42R: Chest 42-44in | Waist 36in\n44L: Chest 44-46in | Waist 38in\nFila Caps: 56cm - 62cm head circumference')">
+              Fit & Sizing Guide
+            </button>
+          </div>
+          <div id="pdpSizesList" class="size-pill-grid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Bespoke Made-to-Measure Card -->
+        <label class="bespoke-toggle-card">
+          <input type="checkbox" id="pdpBespokeCheck" />
+          <div class="bespoke-card-text">
+            <span class="bespoke-card-title">✨ Require Custom Made-to-Measure?</span>
+            <span class="bespoke-card-desc">Check this box to have our master tailor cut this piece strictly to your personalized dimensions. We will contact you immediately upon order confirmation.</span>
+            <span id="bespokeSelectedNote" style="display:none; color: var(--terracotta); font-weight: 600; font-size: 0.75rem; margin-top: 0.25rem;">
+              ✓ Bespoke tailoring option selected (Complimentary)
+            </span>
+          </div>
+        </label>
+
+        <!-- Tailoring Points -->
+        <div style="border-top: 1px solid var(--divider); padding-top: 1rem;">
+          <h4 style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.65rem;">
+            Atelier Specifications
+          </h4>
+          <ul id="pdpDetailsList" style="list-style: none; display: flex; flex-direction: column; gap: 0.4rem;">
+            <!-- Injected via JS -->
+          </ul>
+        </div>
+
+        <!-- Action CTAs -->
+        <div class="pdp-actions-row">
+          <button id="pdpAddToBagBtn" class="btn-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>Add to Bag</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOPPING BAG / CART DRAWER (Slide-over with Emil Kowalski physics) -->
+  <div id="cartOverlay" class="cart-overlay" aria-hidden="true"></div>
+  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Bag">
+    <div class="cart-header">
+      <h3 class="cart-header-title">Shopping Bag</h3>
+      <button id="cartCloseBtn" class="btn-icon" aria-label="Close bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress -->
+    <div class="cart-shipping-meter">
+      <div id="cartMeterText" class="meter-text">
+        Complimentary shipping applies on orders over ₦200,000 / $150
+      </div>
+      <div class="meter-bar-track">
+        <div id="cartMeterFill" class="meter-bar-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Items List -->
+    <div id="cartItemsList" class="cart-items-list">
+      <!-- Injected via JS -->
+    </div>
+
+    <!-- Footer Summary & Checkout -->
+    <div class="cart-footer">
+      <div class="cart-summary-row">
+        <span>Atelier Subtotal</span>
+        <span id="cartSubtotal" class="tabular-nums">₦0</span>
+      </div>
+      <div class="cart-summary-row">
+        <span>Estimated Duties & Shipping</span>
+        <span style="color: var(--terracotta); font-weight: 600;">Complimentary</span>
+      </div>
+      <div class="cart-total-row">
+        <span>Total Order</span>
+        <span id="cartTotal" class="tabular-nums">₦0</span>
+      </div>
+
+      <button id="cartCheckoutBtn" class="btn-cta" style="width: 100%;">
+        <span>Proceed to Secure Checkout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkoutOverlay" class="checkout-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <div class="checkout-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <span class="mono-tag" style="color: var(--terracotta); font-size: 0.72rem; font-weight: 600;">MODA ATELIER CHECKOUT</span>
+          <h2 id="checkoutTitle" style="font-size: 1.6rem;">Order Dispatch Details</h2>
+        </div>
+        <button id="checkoutCloseBtn" class="btn-icon" aria-label="Close checkout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="6"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="checkoutForm">
+        <div class="form-group-grid">
+          <div class="form-field">
+            <label for="checkoutName">Full Name</label>
+            <input type="text" id="checkoutName" required placeholder="Dr. Adewale Balogun" />
+          </div>
+          <div class="form-field">
+            <label for="checkoutEmail">Email Address</label>
+            <input type="email" id="checkoutEmail" required placeholder="adewale@example.com" />
+          </div>
+        </div>
+
+        <div class="form-group-grid">
+          <div class="form-field">
+            <label for="checkoutPhone">Phone Number / WhatsApp</label>
+            <input type="tel" id="checkoutPhone" required placeholder="+234 803 000 0000" />
+          </div>
+          <div class="form-field">
+            <label for="checkoutCountry">Delivery Country</label>
+            <select id="checkoutCountry" required>
+              <option value="NG">Nigeria (Nationwide Express)</option>
+              <option value="UK">United Kingdom (DHL Express 3-Day)</option>
+              <option value="US">United States & Canada</option>
+              <option value="GH">Ghana</option>
+              <option value="OTHER">Other International Destination</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutAddress">Delivery Address</label>
+          <input type="text" id="checkoutAddress" required placeholder="Plot 14, Admiralty Way, Lekki Phase 1, Lagos" />
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutNotes">Tailoring & Fit Instructions (Optional)</label>
+          <textarea id="checkoutNotes" rows="2" placeholder="e.g. Please hem trousers to 41 inches, sleeve length 25.5 inches..."></textarea>
+        </div>
+
+        <div style="background-color: var(--bg-secondary); border-radius: 4px; padding: 1.15rem; margin-bottom: 1.5rem; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.825rem; font-weight: 600;">Payment Gateway:</span>
+            <span style="font-size: 0.775rem; color: var(--terracotta); font-weight: 700;">Paystack / Flutterwave / Cards</span>
+          </div>
+          <p style="font-size: 0.775rem; color: var(--text-secondary);">
+            Supports Nigerian Naira cards, Bank Transfers, USSD, Apple Pay, Visa, and Mastercard globally.
+          </p>
+          <div style="margin-top: 0.75rem; font-size: 0.95rem; font-weight: 700; display: flex; justify-content: space-between;">
+            <span>Amount Due:</span>
+            <span id="checkoutSummaryPrice" class="tabular-nums" style="color: var(--text-primary);">₦0</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-cta" style="width: 100%;">
+          <span>Confirm & Complete Order</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER CONFIRMATION MODAL -->
+  <div id="orderConfirmationOverlay" class="checkout-modal-overlay" role="dialog" aria-modal="true">
+    <div class="checkout-card" style="text-align: center; max-width: 520px;">
+      <div style="width: 54px; height: 54px; border-radius: 9999px; background-color: var(--terracotta-subtle); color: var(--terracotta); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <span class="mono-tag" style="color: var(--terracotta); font-size: 0.72rem; font-weight: 700;">COMMISSION RECORDED</span>
+      <h2 style="font-size: 1.85rem; margin: 0.35rem 0 0.85rem;">Thank You, <span id="confirmPatronName">Patron</span>.</h2>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+        Your order has been logged into the Moda Couture Atelier cutting room. An order receipt and tailor dispatch notification have been dispatched to your email.
+      </p>
+
+      <div style="background-color: var(--bg-secondary); padding: 1rem; border-radius: 4px; border: 1px solid var(--border-subtle); margin-bottom: 1.5rem;">
+        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Atelier Reference ID</span>
+        <div id="confirmOrderNumber" class="tabular-nums" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--terracotta); margin-top: 0.25rem;">MODA-2026-881924</div>
+      </div>
+
+      <button id="orderConfirmCloseBtn" class="btn-cta" style="width: 100%;">
+        <span>Return to Atelier Showcase</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- BESPOKE TAILORING CONSULTATION MODAL -->
+  <div id="consultationOverlay" class="checkout-modal-overlay" role="dialog" aria-modal="true">
+    <div class="checkout-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <span class="mono-tag" style="color: var(--terracotta); font-size: 0.72rem; font-weight: 600;">PRIVATE ATELIER APPOINTMENT</span>
+          <h2 style="font-size: 1.6rem;">Book a Tailoring Consultation</h2>
+        </div>
+        <button id="consultationCloseBtn" class="btn-icon" aria-label="Close consultation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="consultationForm" class="consultation-form-wrap">
+        <div class="form-field">
+          <label for="consName">Full Name</label>
+          <input type="text" id="consName" required placeholder="Prince Adeyemi" />
+        </div>
+
+        <div class="form-field">
+          <label for="consPhone">WhatsApp / Mobile</label>
+          <input type="tel" id="consPhone" required placeholder="+234 802 000 0000" />
+        </div>
+
+        <div class="form-field">
+          <label for="consLocation">Consultation Type</label>
+          <select id="consLocation" required>
+            <option value="lagos">Victoria Island Flagship (In-person Fitting)</option>
+            <option value="london">Mayfair London Showroom (By Appointment)</option>
+            <option value="virtual">Virtual Master Tailor Video Fitting (Worldwide)</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="consOccasion">Occasion / Garment Type</label>
+          <select id="consOccasion" required>
+            <option value="wedding">Traditional Wedding (Groom / Aso-Ebi Set)</option>
+            <option value="senator">Executive Senator Suit Wardrobe</option>
+            <option value="agbada">Ceremonial 3-Piece Grand Agbada</option>
+            <option value="fila">Custom Handwoven Fila Cap Order</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="consNotes">Special Requests / Preferred Date</label>
+          <textarea id="consNotes" rows="2" placeholder="Tell us about your event timeline, fabric preferences, or measurements..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-cta" style="width: 100%;">
+          <span>Reserve Atelier Consultation</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- FOOTER -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-col">
+        <div class="wordmark-logo" style="font-size: 1.8rem; text-align: left;">MODA</div>
+        <span class="wordmark-subtitle" style="text-align: left; margin-left: 0;">COUTURE • LAGOS • LONDON</span>
+        <p>
+          Bespoke African luxury menswear. Reimagining traditional Senator wear, Grand Agbadas, and handcrafted Fila crowns through architectural tailoring and ancestral embroidery.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atelier Boutiques</h4>
+        <ul>
+          <li><span style="color: var(--text-primary); font-weight: 600;">Lagos Flagship:</span><br /><span style="font-size: 0.8rem; color: var(--text-muted);">Plot 24B, Victoria Island, Lagos, Nigeria</span></li>
+          <li style="margin-top: 0.5rem;"><span style="color: var(--text-primary); font-weight: 600;">London Atelier:</span><br /><span style="font-size: 0.8rem; color: var(--text-muted);">Sackville Street, Mayfair, London W1</span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Couture Services</h4>
+        <ul>
+          <li><a href="#catalogSection">Ready-to-Wear Senator Suits</a></li>
+          <li><a href="#catalogSection">Grand Agbada Ensembles</a></li>
+          <li><a href="#catalogSection">Handwoven Aso-Oke Fila</a></li>
+          <li><a href="javascript:void(0)" onclick="document.getElementById('consultationOverlay').classList.add('open')">Bespoke 14-Point Commission</a></li>
+          <li><a href="javascript:void(0)" onclick="document.getElementById('consultationOverlay').classList.add('open')">Bridal Groom Consultation</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Private Client Concierge</h4>
+        <ul>
+          <li><span style="font-size: 0.8rem;">WhatsApp: +234 (0) 812 888 MODA</span></li>
+          <li><span style="font-size: 0.8rem;">Email: atelier@modacouture.com</span></li>
+          <li style="margin-top: 0.5rem;"><span style="font-size: 0.775rem; color: var(--text-muted);">Monday – Saturday: 9:00 AM – 7:00 PM WAT</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 MODA COUTURE. All Rights Reserved. Crafted with Sartorial Prestige.</div>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="#catalogSection" style="color: var(--text-muted);">Terms & Bespoke Policy</a>
+        <a href="#catalogSection" style="color: var(--text-muted);">Worldwide Delivery</a>
+        <a href="#catalogSection" style="color: var(--text-muted);">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
