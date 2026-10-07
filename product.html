@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MODA COUTURE — Inspect Piece</title>
+  <meta name="description" content="Moda Couture Bespoke Atelier Piece Specification. Handcrafted African luxury tailoring, authentic fabrics, and heirloom needlework." />
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Strictly 2 Fonts: Plus Jakarta Sans & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css?v=3.0-editorial-refinement" />
+
+  <style>
+    /* Dedicated PDP Full-Page Styles */
+    .pdp-page-wrapper {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 220ms var(--ease-out);
+    }
+    .pdp-page-wrapper.page-loaded {
+      opacity: 1;
+    }
+
+    .pdp-nav-bar {
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: var(--bg-primary);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .pdp-nav-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .pdp-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex: 1;
+    }
+
+    .pdp-nav-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      position: relative;
+      padding: 0.25rem 0;
+      transition: color var(--duration-hover) var(--ease-out);
+    }
+    .pdp-nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .pdp-nav-container .brand-wordmark {
+      flex: 0 0 auto;
+    }
+
+    .pdp-nav-container .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.65rem;
+      flex: 1;
+    }
+
+    /* Sub-Nav Bar: Dedicated space for Return to Collection (Below Nav Bar) */
+    .pdp-sub-nav {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      width: 100%;
+      position: relative;
+      z-index: 30;
+    }
+
+    .pdp-sub-nav-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .pdp-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: 0.55rem 1rem;
+      min-height: 44px; /* A11y 44x44px target standard */
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-primary);
+      box-shadow: var(--shadow-sm);
+      transition: background-color var(--duration-hover) var(--ease-out),
+                  border-color var(--duration-hover) var(--ease-out),
+                  transform var(--duration-press) var(--ease-out);
+    }
+    .pdp-back-btn:hover {
+      background-color: var(--bg-secondary);
+      border-color: var(--border-strong);
+    }
+    .pdp-back-btn:active {
+      transform: scale(0.97);
+    }
+
+    .pdp-sub-nav-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .pdp-crumb-meta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .pdp-crumb-slash {
+      opacity: 0.45;
+    }
+    .pdp-crumb-current {
+      color: var(--text-secondary);
+      font-weight: 600;
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pdp-layout-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      width: 100%;
+    }
+
+    @media (min-width: 992px) {
+      .pdp-layout-container {
+        grid-template-columns: 1.15fr 1fr;
+        gap: 4.5rem;
+        align-items: start;
+      }
+    }
+
+    /* Left Gallery Column */
+    .pdp-gallery-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .pdp-hero-image-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background-color: var(--bg-secondary);
+      border-radius: 6px;
+      overflow: hidden;
+      outline: 1px solid var(--img-outline);
+    }
+
+    .pdp-hero-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: opacity 220ms var(--ease-out);
+    }
+
+    .pdp-thumbnail-row {
+      display: flex;
+      gap: 0.875rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }
+
+    .pdp-thumb-item {
+      flex: 0 0 88px;
+      height: 105px;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      outline: 1px solid var(--img-outline);
+      background-color: var(--bg-secondary);
+      transition: border-color var(--duration-hover) var(--ease-out), transform var(--duration-press) var(--ease-out);
+    }
+    .pdp-thumb-item:hover {
+      border-color: var(--border-strong);
+    }
+    .pdp-thumb-item.active {
+      border-color: var(--terracotta);
+    }
+    .pdp-thumb-item:active {
+      transform: scale(0.96);
+    }
+    .pdp-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Right Editorial Panel */
+    .pdp-editorial-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .pdp-piece-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .pdp-category-pill {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      background: var(--terracotta-subtle);
+      padding: 0.35rem 0.75rem;
+      border-radius: 2px;
+    }
+
+    .pdp-origin-pill {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.725rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pdp-main-title {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-size: clamp(2rem, 3.5vw, 2.85rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      color: var(--text-primary);
+      text-wrap: balance;
+    }
+
+    .pdp-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.25rem;
+    }
+
+    .pdp-main-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .pdp-tax-caption {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+    }
+
+    .pdp-prose {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      text-wrap: pretty;
+      max-width: 62ch;
+    }
+
+    /* Specs Grid */
+    .pdp-specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      background: var(--bg-secondary);
+      padding: 1.25rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .pdp-spec-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .pdp-spec-box-label {
+      font-size: 0.725rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .pdp-spec-box-val {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Size Selector */
+    .pdp-sizing-module {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .pdp-sizing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pdp-size-heading {
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+    }
+
+    .pdp-size-guide-link {
+      font-size: 0.775rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .pdp-size-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
+    }
+
+    .pdp-size-chip {
+      min-width: 62px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      background: var(--bg-surface);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all var(--duration-hover) var(--ease-out);
+    }
+    .pdp-size-chip:hover {
+      border-color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+    .pdp-size-chip.selected {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      border-color: var(--text-primary);
+    }
+    .pdp-size-chip:active {
+      transform: scale(0.96);
+    }
+
+    /* Bespoke Option Card */
+    .pdp-bespoke-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 1.15rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      background: var(--bg-surface);
+      cursor: pointer;
+      transition: border-color var(--duration-hover) var(--ease-out);
+    }
+    .pdp-bespoke-card:hover {
+      border-color: var(--border-strong);
+    }
+    .pdp-bespoke-card input[type="checkbox"] {
+      margin-top: 0.25rem;
+      accent-color: var(--terracotta);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .pdp-bespoke-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .pdp-bespoke-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .pdp-bespoke-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Actions CTAs */
+    .pdp-cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    .pdp-add-bag-btn {
+      width: 100%;
+      height: 52px;
+      background-color: var(--text-primary);
+      color: var(--bg-primary);
+      border: 1px solid var(--text-primary);
+      border-radius: 4px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: background-color var(--duration-hover) var(--ease-out),
+                  border-color var(--duration-hover) var(--ease-out),
+                  color var(--duration-hover) var(--ease-out),
+                  box-shadow var(--duration-hover) var(--ease-out),
+                  transform var(--duration-press) var(--ease-out);
+    }
+    .pdp-add-bag-btn:hover {
+      background-color: var(--terracotta);
+      border-color: var(--terracotta);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--terracotta-glow);
+    }
+    .pdp-add-bag-btn:active {
+      background-color: var(--terracotta-active);
+      border-color: var(--terracotta-active);
+      color: #ffffff;
+      transform: scale(0.96);
+    }
+
+    .pdp-consult-btn {
+      width: 100%;
+      height: 48px;
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background-color var(--duration-hover) var(--ease-out), transform var(--duration-press) var(--ease-out);
+    }
+    .pdp-consult-btn:hover {
+      background: var(--bg-secondary);
+    }
+    .pdp-consult-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Accordions */
+    .pdp-accordions {
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 0.5rem;
+    }
+
+    .pdp-accordion-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .pdp-accordion-trigger {
+      width: 100%;
+      padding: 1.15rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: none;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .pdp-accordion-content {
+      padding-bottom: 1.15rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      display: none;
+    }
+    .pdp-accordion-item.open .pdp-accordion-content {
+      display: block;
+    }
+
+    /* Related Pieces Section */
+    .pdp-related-section {
+      border-top: 1px solid var(--border-subtle);
+      background-color: var(--bg-secondary);
+      padding: 4.5rem 2rem;
+    }
+    .pdp-related-container {
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    .pdp-related-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2.5rem;
+    }
+    .pdp-related-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .pdp-related-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .pdp-related-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 991px) {
+      .pdp-nav-container {
+        padding: 0.875rem 1.5rem;
+      }
+      .pdp-sub-nav-container {
+        padding: 0.65rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .pdp-nav-container {
+        padding: 0.65rem 1rem;
+        gap: 0.5rem;
+      }
+      .pdp-nav-links {
+        display: none;
+      }
+      .pdp-nav-container .brand-wordmark {
+        flex: 0 0 auto;
+        align-items: flex-start;
+      }
+      .pdp-nav-container .wordmark-logo {
+        font-size: 1.35rem;
+        letter-spacing: 0.18em;
+      }
+      .pdp-nav-container .wordmark-subtitle {
+        font-size: 0.48rem;
+        letter-spacing: 0.18em;
+      }
+      .pdp-nav-container .header-actions {
+        flex: 0 0 auto;
+        gap: 0.35rem;
+      }
+      .pdp-nav-container .currency-full {
+        display: none !important;
+      }
+      .pdp-nav-container .cart-label {
+        display: none !important;
+      }
+      .pdp-nav-container .toggle-group {
+        padding: 2px;
+        gap: 1px;
+      }
+      .pdp-nav-container .toggle-option {
+        padding: 0.25rem 0.45rem;
+        font-size: 0.75rem;
+      }
+      .pdp-nav-container .theme-toggle-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+      }
+      .pdp-nav-container .cart-trigger-btn {
+        padding: 0.35rem 0.55rem;
+        min-height: 36px;
+      }
+      .pdp-sub-nav-container {
+        padding: 0.55rem 1rem;
+      }
+      .pdp-sub-nav-breadcrumbs {
+        display: none;
+      }
+      .pdp-layout-container {
+        padding: 1.5rem 1rem 4rem 1rem;
+        gap: 2.25rem;
+      }
+      .pdp-related-section {
+        padding: 3rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pdp-nav-container {
+        padding: 0.5rem 0.75rem;
+      }
+      .pdp-nav-container .wordmark-logo {
+        font-size: 1.25rem;
+        letter-spacing: 0.15em;
+      }
+      .pdp-nav-container .wordmark-subtitle {
+        display: none;
+      }
+      .pdp-sub-nav-container {
+        padding: 0.5rem 0.75rem;
+      }
+      .pdp-back-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .pdp-layout-container {
+        padding: 1.25rem 0.75rem 3.5rem 0.75rem;
+        gap: 2rem;
+      }
+      .pdp-related-section {
+        padding: 2.5rem 0.75rem;
+      }
+      .pdp-main-title {
+        font-size: 1.85rem;
+      }
+      .pdp-main-price {
+        font-size: 1.65rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- EDITORIAL PAGE SWIPE PANEL (Directional Snappy Transition) -->
+  <div id="pageSwipePanel" class="page-swipe-panel" aria-hidden="true"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Announcements">
+    <div class="announcement-track">
+      <div class="announcement-content">
+        <span class="announcement-pill">● ATELIER DISPATCH</span>
+        <span>COMPLIMENTARY SHIPPING ON ORDERS OVER ₦200,000 / $150</span>
+        <span class="announcement-separator">•</span>
+        <span>BESPOKE FITTINGS AT VICTORIA ISLAND, LAGOS & MAYFAIR, LONDON ATELIERS</span>
+        <span class="announcement-separator">•</span>
+        <span>HANDCRAFTED SENATOR SUITS & ASO-OKE FILA CAPS</span>
+        <span class="announcement-separator">•</span>
+      </div>
+      <div class="announcement-content" aria-hidden="true">
+        <span class="announcement-pill">● ATELIER DISPATCH</span>
+        <span>COMPLIMENTARY SHIPPING ON ORDERS OVER ₦200,000 / $150</span>
+        <span class="announcement-separator">•</span>
+        <span>BESPOKE FITTINGS AT VICTORIA ISLAND, LAGOS & MAYFAIR, LONDON ATELIERS</span>
+        <span class="announcement-separator">•</span>
+        <span>HANDCRAFTED SENATOR SUITS & ASO-OKE FILA CAPS</span>
+        <span class="announcement-separator">•</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pdp-page-wrapper" id="pdpPageWrapper">
+    <!-- Sticky PDP Header -->
+    <header class="pdp-nav-bar">
+      <div class="pdp-nav-container">
+        <!-- Desktop Nav Links -->
+        <nav class="pdp-nav-links" aria-label="Quick Navigation">
+          <a href="index.html" class="pdp-nav-link">Home</a>
+          <a href="index.html#catalogSection" class="pdp-nav-link">Collections</a>
+        </nav>
+
+        <!-- Brand Wordmark -->
+        <a href="index.html" class="brand-wordmark" aria-label="Moda Couture Home">
+          <span class="wordmark-logo">MODA</span>
+          <span class="wordmark-subtitle">COUTURE • ATELIER</span>
+        </a>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <!-- Currency Switcher -->
+          <div class="toggle-group" role="group" aria-label="Currency Selector">
+            <button class="toggle-option currency-toggle-btn active" data-currency="NGN">
+              <span class="currency-full">NGN </span>₦
+            </button>
+            <button class="toggle-option currency-toggle-btn" data-currency="USD">
+              <span class="currency-full">USD </span>$
+            </button>
+          </div>
+
+          <!-- Theme Toggle -->
+          <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+            <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+
+          <!-- Cart Trigger -->
+          <button id="cartTriggerBtn" class="cart-trigger-btn" aria-label="View shopping bag">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="cart-label">Bag</span>
+            <span class="cart-badge" style="display:none;">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sub-Nav Return to Collection Bar (Below Sticky Nav Bar) -->
+    <nav class="pdp-sub-nav" aria-label="Secondary navigation">
+      <div class="pdp-sub-nav-container">
+        <a href="index.html#catalogSection" class="pdp-back-btn" id="pdpBackLink" aria-label="Return to Collections">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Return to Collection</span>
+        </a>
+        <div class="pdp-sub-nav-breadcrumbs">
+          <span class="pdp-crumb-meta">Atelier Collection</span>
+          <span class="pdp-crumb-slash">/</span>
+          <span class="pdp-crumb-current" id="pdpCrumbTitle">Piece Details</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Product Detail View -->
+    <main class="pdp-layout-container">
+      <!-- Left Column: Multi-Angle Authentic Gallery -->
+      <div class="pdp-gallery-col">
+        <div class="pdp-hero-image-wrap">
+          <img id="pdpMainImg" src="assets/images/senator_black.jpg" alt="Atelier Piece Primary Angle" />
+        </div>
+        <div class="pdp-thumbnail-row" id="pdpThumbsRow">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Right Column: Editorial Piece Specs & Bespoke Ordering -->
+      <div class="pdp-editorial-col">
+        <div class="pdp-piece-meta">
+          <span class="pdp-category-pill" id="pdpCategoryPill">SENATOR SUIT</span>
+          <span class="pdp-origin-pill" id="pdpPieceNumber">PIECE Nº 001 // ATELIER BESPOKE</span>
+        </div>
+
+        <h1 class="pdp-main-title" id="pdpTitleText">The Lagos Senator 01</h1>
+
+        <div class="pdp-price-row">
+          <span class="pdp-main-price tabular-nums" id="pdpPriceText">₦185,000</span>
+          <span class="pdp-tax-caption">Taxes & worldwide atelier delivery included</span>
+        </div>
+
+        <p class="pdp-prose" id="pdpDescText">
+          Handcrafted in our Lagos atelier, the Lagos Senator 01 reimagines traditional Nigerian authority through sharp contemporary lines. Features a concealed front placket, mandarin collar, and our signature geometric needlework across the breast.
+        </p>
+
+        <!-- Specifications Summary Grid -->
+        <div class="pdp-specs-grid">
+          <div class="pdp-spec-box">
+            <span class="pdp-spec-box-label">Cloth & Weave</span>
+            <span class="pdp-spec-box-val" id="pdpFabricVal">Super 140s Italian Wool</span>
+          </div>
+          <div class="pdp-spec-box">
+            <span class="pdp-spec-box-label">Cut & Silhouette</span>
+            <span class="pdp-spec-box-val" id="pdpCutVal">Tailored Slim Structured Fit</span>
+          </div>
+          <div class="pdp-spec-box">
+            <span class="pdp-spec-box-label">Atelier Workshop</span>
+            <span class="pdp-spec-box-val">Victoria Island, Lagos</span>
+          </div>
+          <div class="pdp-spec-box">
+            <span class="pdp-spec-box-label">Placket Finishing</span>
+            <span class="pdp-spec-box-val">Concealed Mother-of-Pearl</span>
+          </div>
+        </div>
+
+        <!-- Sizing Matrix Selection -->
+        <div class="pdp-sizing-module">
+          <div class="pdp-sizing-header">
+            <span class="pdp-size-heading">Select Sizing (UK / US / Nigeria)</span>
+            <button class="pdp-size-guide-link" id="pdpSizeGuideBtn">Fit & Sizing Guide</button>
+          </div>
+          <div class="pdp-size-chips" id="pdpSizeChips">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Bespoke Custom Option -->
+        <label class="pdp-bespoke-card">
+          <input type="checkbox" id="pdpBespokeCheckbox" />
+          <div class="pdp-bespoke-text">
+            <span class="pdp-bespoke-title">✨ Require Custom Made-to-Measure?</span>
+            <span class="pdp-bespoke-desc">Our senior cutters will draft a one-of-a-kind pattern to your anatomical measurements. We contact you directly upon order placement.</span>
+          </div>
+        </label>
+
+        <!-- Ordering Buttons -->
+        <div class="pdp-cta-actions">
+          <button class="pdp-add-bag-btn" id="pdpAddToBag">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>Add to Bag</span>
+          </button>
+          <button class="pdp-consult-btn" id="pdpBookFitting">
+            <span>Book Atelier Fitting</span>
+          </button>
+        </div>
+
+        <!-- Atelier Details Accordions -->
+        <div class="pdp-accordions">
+          <div class="pdp-accordion-item open">
+            <button class="pdp-accordion-trigger" aria-expanded="true">
+              <span>Fabric & Loom Provenance</span>
+              <span class="pdp-acc-icon">−</span>
+            </button>
+            <div class="pdp-accordion-content">
+              Every garment uses hand-selected high-twist wool, Swiss cotton voile, or authentic handwoven Aso-Oke cloth loomed in Iseyin, Oyo State. Natural fibers ensure breathability across tropical and temperate climates.
+            </div>
+          </div>
+
+          <div class="pdp-accordion-item">
+            <button class="pdp-accordion-trigger">
+              <span>Hand-Embroidery Craft</span>
+              <span class="pdp-acc-icon">+</span>
+            </button>
+            <div class="pdp-accordion-content">
+              Geometric embroidery patterns are individually guided by master artisans using premium metallic and silk threads. Each stitch is anchored to withstand decades of ceremonial wear.
+            </div>
+          </div>
+
+          <div class="pdp-accordion-item">
+            <button class="pdp-accordion-trigger">
+              <span>Bespoke Delivery Window</span>
+              <span class="pdp-acc-icon">+</span>
+            </button>
+            <div class="pdp-accordion-content">
+              Standard pieces dispatch within 48 hours. Bespoke 14-point commissions require 7 to 10 days of master cutter crafting, followed by express worldwide courier dispatch (DHL Express).
+            </div>
+          </div>
+
+          <div class="pdp-accordion-item">
+            <button class="pdp-accordion-trigger">
+              <span>Complimentary Atelier Alterations</span>
+              <span class="pdp-acc-icon">+</span>
+            </button>
+            <div class="pdp-accordion-content">
+              We provide lifetime complimentary hemline and waist adjustments at our Victoria Island, Lagos and Mayfair, London locations.
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Related Pieces Carousel -->
+    <section class="pdp-related-section">
+      <div class="pdp-related-container">
+        <div class="pdp-related-header">
+          <h2 class="pdp-related-title">Curated Companions from the Atelier</h2>
+          <a href="index.html#catalogSection" style="font-size: 0.825rem; font-weight: 700; color: var(--terracotta); text-decoration: none;">View Entire Collection →</a>
+        </div>
+        <div class="pdp-related-grid" id="pdpRelatedGrid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="footer-container">
+        <div class="footer-brand-col">
+          <div class="wordmark-logo" style="font-size: 1.8rem; text-align: left;">MODA</div>
+          <span class="wordmark-subtitle" style="text-align: left; margin-left: 0;">COUTURE • LAGOS • LONDON</span>
+          <p>
+            Bespoke African luxury menswear. Reimagining traditional Senator wear, Grand Agbadas, and handcrafted Fila crowns through architectural tailoring.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Atelier Boutiques</h4>
+          <ul>
+            <li><span style="color: var(--text-primary); font-weight: 600;">Lagos Flagship:</span><br /><span style="font-size: 0.8rem; color: var(--text-muted);">Plot 24B, Victoria Island, Lagos, Nigeria</span></li>
+            <li style="margin-top: 0.5rem;"><span style="color: var(--text-primary); font-weight: 600;">London Atelier:</span><br /><span style="font-size: 0.8rem; color: var(--text-muted);">Sackville Street, Mayfair, London W1</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Private Client Concierge</h4>
+          <ul>
+            <li><span style="font-size: 0.8rem;">WhatsApp: +234 (0) 812 888 MODA</span></li>
+            <li><span style="font-size: 0.8rem;">Email: atelier@modacouture.com</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 MODA COUTURE. All Rights Reserved.</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Shopping Bag / Cart Drawer -->
+  <div id="cartOverlay" class="cart-overlay" aria-hidden="true"></div>
+  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Bag">
+    <div class="cart-header">
+      <div class="cart-title-row">
+        <h3 class="cart-header-title">Shopping Bag</h3>
+        <span id="cartCountTag" class="mono-tag tabular-nums">0 ITEMS</span>
+      </div>
+      <button id="cartCloseBtn" class="btn-icon" aria-label="Close bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress -->
+    <div class="cart-shipping-meter">
+      <div id="cartMeterText" class="meter-text">
+        Complimentary shipping applies on orders over ₦200,000 / $150
+      </div>
+      <div class="meter-bar-track">
+        <div id="cartMeterFill" class="meter-bar-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Items List -->
+    <div id="cartItemsList" class="cart-items-list">
+      <!-- Injected via JS -->
+    </div>
+
+    <!-- Footer Summary & Checkout -->
+    <div class="cart-footer">
+      <div class="cart-summary-row">
+        <span>Atelier Subtotal</span>
+        <span id="cartSubtotal" class="tabular-nums">₦0</span>
+      </div>
+      <div class="cart-summary-row">
+        <span>Estimated Duties & Shipping</span>
+        <span style="color: var(--terracotta); font-weight: 600;">Complimentary</span>
+      </div>
+      <div class="cart-total-row">
+        <span>Total Order</span>
+        <span id="cartTotal" class="tabular-nums">₦0</span>
+      </div>
+
+      <button id="cartCheckoutBtn" class="btn-cta" style="width: 100%;">
+        <span>Proceed to Secure Checkout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- BESPOKE TAILORING CONSULTATION MODAL -->
+  <div id="consultationOverlay" class="checkout-modal-overlay" role="dialog" aria-modal="true">
+    <div class="checkout-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <span class="mono-tag" style="color: var(--terracotta); font-size: 0.72rem; font-weight: 600;">PRIVATE ATELIER APPOINTMENT</span>
+          <h2 style="font-size: 1.6rem;">Book a Tailoring Consultation</h2>
+        </div>
+        <button id="consultationCloseBtn" class="btn-icon" aria-label="Close consultation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="consultationForm" class="consultation-form-wrap">
+        <div class="form-field">
+          <label for="consName">Full Name</label>
+          <input type="text" id="consName" required placeholder="Prince Adeyemi" />
+        </div>
+
+        <div class="form-field">
+          <label for="consPhone">WhatsApp / Mobile</label>
+          <input type="tel" id="consPhone" required placeholder="+234 802 000 0000" />
+        </div>
+
+        <div class="form-field">
+          <label for="consLocation">Consultation Type</label>
+          <select id="consLocation" required>
+            <option value="lagos">Victoria Island Flagship (In-person Fitting)</option>
+            <option value="london">Mayfair London Showroom (By Appointment)</option>
+            <option value="virtual">Virtual Master Tailor Video Fitting (Worldwide)</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="consOccasion">Occasion / Garment Type</label>
+          <select id="consOccasion" required>
+            <option value="wedding">Traditional Wedding (Groom / Aso-Ebi Set)</option>
+            <option value="senator">Executive Senator Suit Wardrobe</option>
+            <option value="agbada">Ceremonial 3-Piece Grand Agbada</option>
+            <option value="fila">Custom Handwoven Fila Cap Order</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="consNotes">Special Requests / Preferred Date</label>
+          <textarea id="consNotes" rows="2" placeholder="Tell us about your event timeline, fabric preferences, or measurements..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-cta" style="width: 100%;">
+          <span>Reserve Atelier Consultation</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRIVATE ATELIER CHECKOUT MODAL -->
+  <div id="checkoutOverlay" class="checkout-modal-overlay" role="dialog" aria-modal="true">
+    <div class="checkout-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <span class="mono-tag" style="color: var(--terracotta); font-size: 0.72rem; font-weight: 600;">SECURE ATELIER ACQUISITION</span>
+          <h2 style="font-size: 1.6rem;">Private Client Checkout</h2>
+        </div>
+        <button id="checkoutCloseBtn" class="btn-icon" aria-label="Close checkout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="checkoutForm" class="checkout-form-wrap">
+        <div class="form-field">
+          <label for="checkoutName">Patron Name</label>
+          <input type="text" id="checkoutName" required placeholder="Chief Olawale Balogun" />
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutEmail">Email for Dispatch & Tracking</label>
+          <input type="email" id="checkoutEmail" required placeholder="olawale.balogun@executive.ng" />
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutPhone">WhatsApp / Mobile Contact</label>
+          <input type="tel" id="checkoutPhone" required placeholder="+234 (0) 803 123 4567" />
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutCountry">Delivery Country</label>
+          <select id="checkoutCountry" required>
+            <option value="NG">Nigeria (Nationwide Express)</option>
+            <option value="UK">United Kingdom (DHL Express 3-Day)</option>
+            <option value="US">United States & Canada</option>
+            <option value="GH">Ghana</option>
+            <option value="OTHER">Other International Destination</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutAddress">Delivery Address</label>
+          <input type="text" id="checkoutAddress" required placeholder="Plot 14, Admiralty Way, Lekki Phase 1, Lagos" />
+        </div>
+
+        <div class="form-field">
+          <label for="checkoutNotes">Tailoring & Fit Instructions (Optional)</label>
+          <textarea id="checkoutNotes" rows="2" placeholder="e.g. Please hem trousers to 41 inches, sleeve length 25.5 inches..."></textarea>
+        </div>
+
+        <div style="background-color: var(--bg-secondary); border-radius: 4px; padding: 1.15rem; margin-bottom: 1.5rem; border: 1px solid var(--border-subtle); box-sizing: border-box; width: 100%; max-width: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.35rem;">
+            <span style="font-size: 0.825rem; font-weight: 600;">Payment Gateway:</span>
+            <span style="font-size: 0.775rem; color: var(--terracotta); font-weight: 700;">Paystack / Flutterwave / Cards</span>
+          </div>
+          <p style="font-size: 0.775rem; color: var(--text-secondary); text-wrap: pretty;">
+            Supports Nigerian Naira cards, Bank Transfers, USSD, Apple Pay, Visa, and Mastercard globally.
+          </p>
+          <div style="margin-top: 0.75rem; font-size: 0.95rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
+            <span>Amount Due:</span>
+            <span id="checkoutSummaryPrice" class="tabular-nums" style="color: var(--text-primary);">₦0</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-cta" style="width: 100%;">
+          <span>Confirm & Complete Order</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER CONFIRMATION MODAL -->
+  <div id="orderConfirmationOverlay" class="checkout-modal-overlay" role="dialog" aria-modal="true">
+    <div class="checkout-card" style="text-align: center; max-width: 520px;">
+      <div style="width: 54px; height: 54px; border-radius: 9999px; background-color: var(--terracotta-subtle); color: var(--terracotta); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <span class="mono-tag" style="color: var(--terracotta); font-size: 0.72rem; font-weight: 700;">COMMISSION RECORDED</span>
+      <h2 style="font-size: 1.85rem; margin: 0.35rem 0 0.85rem;">Thank You, <span id="confirmPatronName">Patron</span>.</h2>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+        Your order has been logged into the Moda Couture Atelier cutting room. An order receipt and tailor dispatch notification have been dispatched to your email.
+      </p>
+
+      <div style="background-color: var(--bg-secondary); padding: 1rem; border-radius: 4px; border: 1px solid var(--border-subtle); margin-bottom: 1.5rem;">
+        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Atelier Reference ID</span>
+        <div id="confirmOrderNumber" class="tabular-nums" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--terracotta); margin-top: 0.25rem;">MODA-2026-881924</div>
+      </div>
+
+      <button id="orderConfirmCloseBtn" class="btn-cta" style="width: 100%;">
+        <span>Return to Atelier Showcase</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

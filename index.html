@@ -10,10 +10,10 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <!-- Fonts Preconnect -->
+  <!-- Fonts Preconnect & Strictly 2 Fonts: Plus Jakarta Sans & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css?v=2.5-checkout-refinement" />
 
@@ -42,6 +42,34 @@
   </style>
 </head>
 <body>
+
+  <!-- EDITORIAL PRELOADER (Outfit.hellohello.is inspired) -->
+  <div id="sitePreloader" class="site-preloader" aria-hidden="true">
+    <div class="preloader-backdrop"></div>
+    <div class="preloader-container">
+      <div class="preloader-shutter-frame">
+        <div class="shutter-image-stack" id="shutterStack">
+          <img src="assets/images/senator_black.jpg" alt="Moda Preloader Shutter 1" class="shutter-img active" />
+          <img src="assets/images/agbada_noir.jpg" alt="Moda Preloader Shutter 2" class="shutter-img" />
+          <img src="assets/images/senator_cream.jpg" alt="Moda Preloader Shutter 3" class="shutter-img" />
+          <img src="assets/images/fila_black.jpg" alt="Moda Preloader Shutter 4" class="shutter-img" />
+          <img src="assets/images/senator_midnight.jpg" alt="Moda Preloader Shutter 5" class="shutter-img" />
+          <img src="assets/images/fila_terracotta.jpg" alt="Moda Preloader Shutter 6" class="shutter-img" />
+        </div>
+        <div class="preloader-wordmark-mask">
+          <span class="preloader-giant-text">MODA</span>
+        </div>
+      </div>
+      <div class="preloader-meta-bar">
+        <span class="preloader-meta-sub">HAUTE COUTURE AFRICANA</span>
+        <div class="preloader-counter tabular-nums" id="preloaderCounter">00%</div>
+        <span class="preloader-meta-loc">LAGOS • LONDON</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDITORIAL PAGE SWIPE PANEL (Directional Snappy Transition) -->
+  <div id="pageSwipePanel" class="page-swipe-panel" aria-hidden="true"></div>
 
   <!-- Top Announcement Bar (Infinite Smooth Scrolling) -->
   <div class="announcement-bar" role="region" aria-label="Announcements">
@@ -89,7 +117,6 @@
         <a href="#catalogSection" class="nav-link" data-cat="senator">Senator Suits</a>
         <a href="#catalogSection" class="nav-link" data-cat="agbada">Grand Agbada</a>
         <a href="#catalogSection" class="nav-link" data-cat="fila">Fila Caps</a>
-        <a href="#editorialSection" class="nav-link">Lookbook</a>
       </nav>
 
       <!-- Wordmark Logo -->
@@ -177,10 +204,6 @@
       </a>
       <a href="#catalogSection" class="mobile-nav-item mobile-filter-link" data-category="bespoke">
         <span>Bespoke Atelier</span>
-        <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
-      </a>
-      <a href="#editorialSection" class="mobile-nav-item">
-        <span>Lookbook & Heritage</span>
         <span style="font-size: 0.8rem; color: var(--terracotta);">→</span>
       </a>
     </nav>
@@ -331,144 +354,7 @@
         <!-- Rendered dynamically by app.js -->
       </div>
     </section>
-
-    <!-- LOOKBOOK & HERITAGE EDITORIAL SECTION -->
-    <section id="editorialSection" class="editorial-section">
-      <div class="editorial-container">
-        <div class="editorial-image-frame">
-          <img src="assets/images/agbada_runway.jpg" alt="Moda Couture Runway Editorial" />
-        </div>
-        <div class="editorial-text-col">
-          <span class="mono-tag" style="color: var(--terracotta); font-weight: 700; font-size: 0.8rem;">HERITAGE & CRAFT MANIFESTO</span>
-          <h2>The Senator Suit as Modern Sovereign Armor</h2>
-          <p>
-            Born along the Niger Delta and elevated across Lagos high society, the Senator wear is the undisputed modern sartorial signature of the African gentleman. It replaces Western conventions with regal band collars, concealed plackets, and geometric chest embroidery inspired by ancestral motifs.
-          </p>
-          <p>
-            At Moda Couture, every piece begins with hand-selected Super 140s Italian wool, Swiss voile cotton, or handwoven Aso-Oke cloth. We cut each garment by hand in our Lagos workshop, ensuring sharp shoulder balance, smooth armhole movement, and trousers that drape without break onto handcrafted leather footwear.
-          </p>
-
-          <div style="display: flex; gap: 2rem; margin-top: 1rem;">
-            <div>
-              <strong style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; display: block;" class="tabular-nums">100%</strong>
-              <span style="font-size: 0.775rem; color: var(--text-muted); text-transform: uppercase;">Handcrafted In Lagos</span>
-            </div>
-            <div>
-              <strong style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; display: block;" class="tabular-nums">7-10 Days</strong>
-              <span style="font-size: 0.775rem; color: var(--text-muted); text-transform: uppercase;">Bespoke Delivery Window</span>
-            </div>
-            <div>
-              <strong style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; display: block;" class="tabular-nums">48 Hours</strong>
-              <span style="font-size: 0.775rem; color: var(--text-muted); text-transform: uppercase;">Ready-To-Wear Dispatch</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
-
-  <!-- PRODUCT DETAIL MODAL (PDP) — Outfit.hellohello.is inspired smooth transition -->
-  <div id="pdpOverlay" class="pdp-overlay" role="dialog" aria-modal="true" aria-labelledby="pdpTitle">
-    <div class="pdp-modal">
-      <button id="pdpCloseBtn" class="pdp-close-btn" aria-label="Close product view">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-
-      <!-- PDP Gallery -->
-      <div class="pdp-gallery">
-        <div class="pdp-main-image-wrap">
-          <img id="pdpMainImage" src="" alt="Product View" />
-        </div>
-        <div id="pdpThumbs" class="pdp-thumbnails">
-          <!-- Thumbnails injected via JS -->
-        </div>
-      </div>
-
-      <!-- PDP Details Scroll -->
-      <div class="pdp-details-scroll">
-        <div class="pdp-header-meta">
-          <span id="pdpCategory" class="pdp-category-tag">Senator Suit • Atelier Collection</span>
-          <h2 id="pdpTitle" class="pdp-title">The Lagos Senator 01</h2>
-          <div class="pdp-price-tag tabular-nums" id="pdpPrice">₦185,000</div>
-          <span class="pdp-tax-note">Taxes and worldwide duties calculated at checkout</span>
-        </div>
-
-        <p id="pdpDesc" class="pdp-description">
-          Exquisite tailored African Senator suit with geometric terracotta chest embroidery.
-        </p>
-
-        <!-- Tailoring Specification Box -->
-        <div class="pdp-specs-box">
-          <div class="pdp-spec-item">
-            <span class="pdp-spec-label">Cloth & Weave</span>
-            <span id="pdpFabric" class="pdp-spec-val">Super 140s Italian Wool</span>
-          </div>
-          <div class="pdp-spec-item">
-            <span class="pdp-spec-label">Cut & Silhouette</span>
-            <span id="pdpCut" class="pdp-spec-val">Structured Modern Tailoring</span>
-          </div>
-          <div class="pdp-spec-item">
-            <span class="pdp-spec-label">Atelier Origin</span>
-            <span class="pdp-spec-val">Victoria Island, Lagos</span>
-          </div>
-          <div class="pdp-spec-item">
-            <span class="pdp-spec-label">Placket Finishing</span>
-            <span class="pdp-spec-val">Concealed Mother-of-Pearl</span>
-          </div>
-        </div>
-
-        <!-- Size Selector -->
-        <div class="pdp-size-section">
-          <div class="pdp-size-header">
-            <span class="pdp-size-title">Select Sizing (UK / US / Nigeria)</span>
-            <button class="pdp-size-guide-btn" onclick="alert('Moda Sizing Guide:\n38R: Chest 38-40in | Waist 32in\n40R: Chest 40-42in | Waist 34in\n42R: Chest 42-44in | Waist 36in\n44L: Chest 44-46in | Waist 38in\nFila Caps: 56cm - 62cm head circumference')">
-              Fit & Sizing Guide
-            </button>
-          </div>
-          <div id="pdpSizesList" class="size-pill-grid">
-            <!-- Injected via JS -->
-          </div>
-        </div>
-
-        <!-- Bespoke Made-to-Measure Card -->
-        <label class="bespoke-toggle-card">
-          <input type="checkbox" id="pdpBespokeCheck" />
-          <div class="bespoke-card-text">
-            <span class="bespoke-card-title">✨ Require Custom Made-to-Measure?</span>
-            <span class="bespoke-card-desc">Check this box to have our master tailor cut this piece strictly to your personalized dimensions. We will contact you immediately upon order confirmation.</span>
-            <span id="bespokeSelectedNote" style="display:none; color: var(--terracotta); font-weight: 600; font-size: 0.75rem; margin-top: 0.25rem;">
-              ✓ Bespoke tailoring option selected (Complimentary)
-            </span>
-          </div>
-        </label>
-
-        <!-- Tailoring Points -->
-        <div style="border-top: 1px solid var(--divider); padding-top: 1rem;">
-          <h4 style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.65rem;">
-            Atelier Specifications
-          </h4>
-          <ul id="pdpDetailsList" style="list-style: none; display: flex; flex-direction: column; gap: 0.4rem;">
-            <!-- Injected via JS -->
-          </ul>
-        </div>
-
-        <!-- Action CTAs -->
-        <div class="pdp-actions-row">
-          <button id="pdpAddToBagBtn" class="btn-cta">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-            <span>Add to Bag</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- SHOPPING BAG / CART DRAWER (Slide-over with Emil Kowalski physics) -->
   <div id="cartOverlay" class="cart-overlay" aria-hidden="true"></div>

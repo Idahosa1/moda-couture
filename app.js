@@ -1,6 +1,7 @@
 /**
  * MODA COUTURE — Interactive E-Commerce & Atelier Application
  * Craft Standards: Emil Kowalski & Jakub Krehel
+ * Strictly 2 Fonts: Plus Jakarta Sans & Space Grotesk (Prices & Highlights Only)
  */
 
 (function () {
@@ -10,7 +11,7 @@
   const urlParams = new URLSearchParams(window.location.search);
   const paramTheme = urlParams.get('theme');
   const paramCurrency = urlParams.get('currency');
-  const paramProduct = urlParams.get('product');
+  const paramProduct = urlParams.get('id') || urlParams.get('product');
   const paramCart = urlParams.get('cart');
   const paramMobileNav = urlParams.get('mobileNav');
   const paramConsultation = urlParams.get('consultation');
@@ -30,7 +31,7 @@
     selectedGalleryImageIndex: 0
   };
 
-  // Products Database
+  // Curated Products Database — Clean Editorial Studio Photography
   const products = [
     {
       id: 'senator-01',
@@ -152,7 +153,7 @@
     },
     {
       id: 'senator-03',
-      name: 'Signature Asymmetrical Senator',
+      name: 'Midnight Obsidian Senator Suit',
       category: 'senator',
       categoryLabel: 'Senator Suit',
       priceNGN: 210000,
@@ -160,7 +161,7 @@
       tag: 'Atelier Limited',
       fabric: 'Super 160s Worsted Charcoal Wool',
       cut: 'Slim Atelier Cut',
-      description: 'Designed for the sartorial connoisseur. An asymmetrical geometric embroidery pattern sweeps across the left chest and collar in muted bronze and terracotta hues, creating a sharp graphic statement against pitch-black fabric.',
+      description: 'Designed for the sartorial connoisseur. An asymmetrical geometric embroidery pattern sweeps across the left chest and collar in muted bronze and terracotta hues, creating a sharp graphic statement.',
       images: [
         'assets/images/senator_midnight.jpg',
         'assets/images/senator_detail.jpg',
@@ -176,7 +177,7 @@
     },
     {
       id: 'agbada-02',
-      name: 'Moda Runway Grand Agbada',
+      name: 'The Gilded Ivory Agbada Set',
       category: 'agbada',
       categoryLabel: 'Grand Agbada',
       priceNGN: 380000,
@@ -184,35 +185,35 @@
       tag: 'Runway Edition',
       fabric: 'Structured Damask & Silk Brocade',
       cut: 'Monumental Flow Silhouette',
-      description: 'First debuted at Lagos Fashion Week, this runway piece combines traditional Yoruba royalty with stark minimalism. The weighted drape ensures the sleeves stay dramatically perched on the shoulders during motion.',
+      description: 'Celebrated across royal durbars and international galas, this majestic piece combines traditional West African royalty with stark architectural minimalism.',
       images: [
         'assets/images/agbada_runway.jpg',
         'assets/images/agbada_noir.jpg',
-        'assets/images/fila_black.jpg'
+        'assets/images/senator_detail.jpg'
       ],
       sizes: ['38R', '40R', '42R', '44L', '46L'],
       details: [
-        'Signature runway proportion with broad architectural wingspan',
-        'Includes complimentary hand-embroidered velvet Fila',
+        'Signature proportion with broad architectural wingspan',
+        'Includes complimentary hand-woven velvet Fila',
         'Deep side slits for effortless stride',
         'Hand-stitched by senior master tailors'
       ]
     },
     {
       id: 'bespoke-01',
-      name: 'Bespoke Made-to-Measure Commission',
+      name: 'Bespoke 14-Point Commission',
       category: 'bespoke',
       categoryLabel: 'Bespoke Atelier',
       priceNGN: 225000,
       priceUSD: 155,
       tag: 'Bespoke Only',
-      fabric: 'Custom Client Selection (Wool/Silk/Cashmere)',
+      fabric: 'Custom Client Selection (Wool/Silk/Damask)',
       cut: 'Individually Drafted Pattern',
       description: 'Work directly with our master cutters to create an entirely bespoke Senator or Agbada set drafted from your unique 14-point body measurements. Includes custom geometric chest embroidery designed specifically for you.',
       images: [
-        'assets/images/senator_detail.jpg',
         'assets/images/senator_black.jpg',
-        'assets/images/agbada_noir.jpg'
+        'assets/images/senator_cream.jpg',
+        'assets/images/senator_detail.jpg'
       ],
       sizes: ['Bespoke Fit'],
       details: [
@@ -224,7 +225,7 @@
     }
   ];
 
-  // Helper: Format Price
+  // Helper: Format Price in Space Grotesk tabular-nums
   function formatPrice(priceNGN, priceUSD) {
     if (state.currency === 'USD') {
       return `$${priceUSD.toLocaleString('en-US')}`;
@@ -233,7 +234,7 @@
   }
 
   // Toast Notification System
-  function showToast(message, icon = 'check') {
+  function showToast(message) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
 
@@ -300,13 +301,31 @@
     renderCatalog();
     renderCart();
     if (state.selectedProduct) {
-      updatePdpPrice();
+      const priceEl = document.getElementById('pdpPriceText');
+      if (priceEl) priceEl.textContent = formatPrice(state.selectedProduct.priceNGN, state.selectedProduct.priceUSD);
     }
 
     showToast(`Currency updated to ${currency === 'NGN' ? 'Nigerian Naira (₦)' : 'US Dollar ($)'}`);
   }
 
-  // Render Catalog Grid
+  // Snappy Editorial Swipe Page Navigation (Directional GPU Transform)
+  function navigateToProduct(productId) {
+    const panel = document.getElementById('pageSwipePanel');
+    sessionStorage.setItem('moda_swipe_dir', 'forward');
+    if (panel) {
+      panel.style.borderRight = 'none';
+      panel.style.borderLeft = '2px solid var(--terracotta)';
+      panel.style.transition = 'transform 200ms cubic-bezier(0.23, 1, 0.32, 1)';
+      panel.classList.add('swipe-in');
+      setTimeout(() => {
+        window.location.href = `product.html?id=${encodeURIComponent(productId)}`;
+      }, 160);
+    } else {
+      window.location.href = `product.html?id=${encodeURIComponent(productId)}`;
+    }
+  }
+
+  // Render Catalog Grid on index.html
   function renderCatalog() {
     const grid = document.getElementById('productGrid');
     if (!grid) return;
@@ -329,7 +348,7 @@
     if (filtered.length === 0) {
       grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
-          <p style="font-size: 1.25rem; font-family: 'Playfair Display', serif; margin-bottom: 0.5rem;">No items found matching your selection.</p>
+          <p style="font-size: 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; margin-bottom: 0.5rem;">No items found matching your selection.</p>
           <p style="font-size: 0.85rem;">Try refining your keywords or selecting another category.</p>
         </div>
       `;
@@ -342,7 +361,7 @@
           <span class="product-tag-pill">${product.tag}</span>
           <img src="${product.images[0]}" alt="${product.name}" loading="lazy" />
           <div class="product-quick-view-overlay">
-            <button class="quick-view-btn" data-product-id="${product.id}">
+            <button class="quick-view-btn" data-product-id="${product.id}" aria-label="Inspect ${product.name}">
               Inspect Piece
             </button>
           </div>
@@ -359,110 +378,282 @@
       </article>
     `).join('');
 
-    // Attach card click handlers for fluid modal expansion
+    // Attach card click handlers: clicking card or Inspect Piece navigates to dedicated product page
     grid.querySelectorAll('.product-card').forEach(card => {
       card.addEventListener('click', (e) => {
         const id = card.dataset.productId;
-        openProductModal(id);
+        navigateToProduct(id);
+      });
+    });
+
+    grid.querySelectorAll('.quick-view-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.productId;
+        navigateToProduct(id);
       });
     });
   }
 
-  // Open Product Modal (PDP) with Outfit.hellohello.is inspired smooth transition
-  function openProductModal(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
+  // Initial Page Preloader Animation (Outfit.hellohello.is inspired)
+  function initPreloader() {
+    const preloader = document.getElementById('sitePreloader');
+    if (!preloader) return;
+
+    // Accessibility check: Skip animation if user requested reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      preloader.classList.add('dismissed');
+      return;
+    }
+
+    const counterEl = document.getElementById('preloaderCounter');
+    const shutterStack = document.getElementById('shutterStack');
+    const images = shutterStack ? shutterStack.querySelectorAll('.shutter-img') : [];
+
+    let currentImgIdx = 0;
+    const shutterInterval = setInterval(() => {
+      if (images.length > 0) {
+        images[currentImgIdx].classList.remove('active');
+        currentImgIdx = (currentImgIdx + 1) % images.length;
+        images[currentImgIdx].classList.add('active');
+      }
+    }, 140);
+
+    const startTime = performance.now();
+    const duration = 1100; // 1.1s duration: fast, cinematic, non-blocking
+
+    function updateCounter(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progressFraction = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progressFraction, 3);
+      const progress = Math.floor(eased * 100);
+
+      if (counterEl) {
+        counterEl.textContent = `${String(progress).padStart(2, '0')}%`;
+      }
+
+      if (progressFraction < 1) {
+        requestAnimationFrame(updateCounter);
+      } else {
+        clearInterval(shutterInterval);
+        setTimeout(() => {
+          preloader.classList.add('dismissed');
+        }, 120);
+      }
+    }
+
+    requestAnimationFrame(updateCounter);
+  }
+
+  // Dedicated Product Detail Page Initializer (product.html)
+  function initProductDetailPage() {
+    const pdpWrapper = document.getElementById('pdpPageWrapper');
+    if (!pdpWrapper) return;
+
+    const prodId = paramProduct || 'senator-01';
+    const product = products.find(p => p.id === prodId) || products[0];
 
     state.selectedProduct = product;
     state.selectedSize = product.sizes[0];
     state.isBespokeFitting = false;
     state.selectedGalleryImageIndex = 0;
 
-    const modal = document.getElementById('pdpOverlay');
-    const imgEl = document.getElementById('pdpMainImage');
-    const titleEl = document.getElementById('pdpTitle');
-    const catEl = document.getElementById('pdpCategory');
-    const descEl = document.getElementById('pdpDesc');
-    const fabricEl = document.getElementById('pdpFabric');
-    const cutEl = document.getElementById('pdpCut');
-    const thumbsContainer = document.getElementById('pdpThumbs');
-    const sizeContainer = document.getElementById('pdpSizesList');
-    const detailsContainer = document.getElementById('pdpDetailsList');
-    const bespokeCheckbox = document.getElementById('pdpBespokeCheck');
+    // Set page title
+    document.title = `${product.name} — MODA COUTURE Atelier`;
 
-    if (bespokeCheckbox) bespokeCheckbox.checked = false;
+    // Elements
+    const titleEl = document.getElementById('pdpTitleText');
+    const catPill = document.getElementById('pdpCategoryPill');
+    const pieceNum = document.getElementById('pdpPieceNumber');
+    const priceEl = document.getElementById('pdpPriceText');
+    const descEl = document.getElementById('pdpDescText');
+    const fabricVal = document.getElementById('pdpFabricVal');
+    const cutVal = document.getElementById('pdpCutVal');
+    const mainImg = document.getElementById('pdpMainImg');
+    const thumbsRow = document.getElementById('pdpThumbsRow');
+    const sizeChipsContainer = document.getElementById('pdpSizeChips');
+    const relatedGrid = document.getElementById('pdpRelatedGrid');
+    const bespokeCheck = document.getElementById('pdpBespokeCheckbox');
+    const backBtn = document.getElementById('pdpBackLink');
 
-    titleEl.textContent = product.name;
-    catEl.textContent = `${product.categoryLabel} • Atelier Collection`;
-    descEl.textContent = product.description;
-    fabricEl.textContent = product.fabric;
-    cutEl.textContent = product.cut;
-    imgEl.src = product.images[0];
-    imgEl.alt = product.name;
+    // Return to collections button with snappy directional reverse swipe
+    if (backBtn) {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const panel = document.getElementById('pageSwipePanel');
+        sessionStorage.setItem('moda_swipe_dir', 'reverse');
+        if (panel) {
+          panel.style.borderLeft = 'none';
+          panel.style.borderRight = '2px solid var(--terracotta)';
+          panel.style.transition = 'none';
+          panel.style.transform = 'translateX(-100%)';
+          panel.offsetHeight;
+          requestAnimationFrame(() => {
+            panel.style.transition = 'transform 200ms cubic-bezier(0.23, 1, 0.32, 1)';
+            panel.style.transform = 'translateX(0)';
+          });
+          setTimeout(() => {
+            window.location.href = 'index.html#catalogSection';
+          }, 160);
+        } else {
+          window.location.href = 'index.html#catalogSection';
+        }
+      });
+    }
 
-    updatePdpPrice();
+    if (titleEl) titleEl.textContent = product.name;
+    const crumbTitle = document.getElementById('pdpCrumbTitle');
+    if (crumbTitle) crumbTitle.textContent = product.name;
+    if (catPill) catPill.textContent = product.categoryLabel.toUpperCase();
+    if (pieceNum) pieceNum.textContent = `PIECE Nº 00${products.indexOf(product) + 1} // ATELIER BESPOKE`;
+    if (priceEl) priceEl.textContent = formatPrice(product.priceNGN, product.priceUSD);
+    if (descEl) descEl.textContent = product.description;
+    if (fabricVal) fabricVal.textContent = product.fabric;
+    if (cutVal) cutVal.textContent = product.cut;
+    if (mainImg) {
+      mainImg.src = product.images[0];
+      mainImg.alt = product.name;
+    }
 
     // Render Thumbnails
-    thumbsContainer.innerHTML = product.images.map((img, idx) => `
-      <button class="pdp-thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}">
-        <img src="${img}" alt="${product.name} view ${idx + 1}" />
-      </button>
-    `).join('');
+    if (thumbsRow) {
+      thumbsRow.innerHTML = product.images.map((img, idx) => `
+        <div class="pdp-thumb-item ${idx === 0 ? 'active' : ''}" data-index="${idx}">
+          <img src="${img}" alt="${product.name} angle ${idx + 1}" />
+        </div>
+      `).join('');
 
-    thumbsContainer.querySelectorAll('.pdp-thumb-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const index = parseInt(btn.dataset.index, 10);
-        state.selectedGalleryImageIndex = index;
-        imgEl.src = product.images[index];
-        thumbsContainer.querySelectorAll('.pdp-thumb-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+      thumbsRow.querySelectorAll('.pdp-thumb-item').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const idx = parseInt(thumb.dataset.index, 10);
+          state.selectedGalleryImageIndex = idx;
+          if (mainImg) {
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+              mainImg.src = product.images[idx];
+              mainImg.style.opacity = '1';
+            }, 120);
+          }
+          thumbsRow.querySelectorAll('.pdp-thumb-item').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+      });
+    }
+
+    // Render Size Chips
+    if (sizeChipsContainer) {
+      sizeChipsContainer.innerHTML = product.sizes.map((sz, idx) => `
+        <button class="pdp-size-chip ${idx === 0 ? 'selected' : ''}" data-size="${sz}">${sz}</button>
+      `).join('');
+
+      sizeChipsContainer.querySelectorAll('.pdp-size-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          state.selectedSize = chip.dataset.size;
+          sizeChipsContainer.querySelectorAll('.pdp-size-chip').forEach(c => c.classList.remove('selected'));
+          chip.classList.add('selected');
+        });
+      });
+    }
+
+    // Sizing guide alert
+    document.getElementById('pdpSizeGuideBtn')?.addEventListener('click', () => {
+      alert('Moda Couture Atelier Sizing Guide:\n\n38R: Chest 38-40in | Waist 32in | Height 5ft 8in - 5ft 11in\n40R: Chest 40-42in | Waist 34in | Height 5ft 9in - 6ft 1in\n42R: Chest 42-44in | Waist 36in | Height 5ft 10in - 6ft 2in\n44L: Chest 44-46in | Waist 38in | Height 6ft 0in - 6ft 4in\n46L: Chest 46-48in | Waist 40in | Height 6ft 1in - 6ft 5in\n\nFila Caps:\n56cm - 62cm circumference\n\nCustom Made-to-Measure: Tailored to your exact 14-point body measurements.');
+    });
+
+    // Bespoke custom toggle
+    if (bespokeCheck) {
+      bespokeCheck.addEventListener('change', (e) => {
+        state.isBespokeFitting = e.target.checked;
+        if (e.target.checked) {
+          showToast('Bespoke custom fit selected. Our master tailor will draft a personalized pattern.');
+        }
+      });
+    }
+
+    // Add to Bag CTA
+    document.getElementById('pdpAddToBag')?.addEventListener('click', () => {
+      addToCart(product, state.selectedSize || 'Standard', state.isBespokeFitting);
+      toggleCart(true);
+    });
+
+    // Book Fitting Consultation CTA
+    document.getElementById('pdpBookFitting')?.addEventListener('click', openConsultationModal);
+
+    // Accordions
+    document.querySelectorAll('.pdp-accordion-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.pdp-accordion-item');
+        const isOpen = item.classList.contains('open');
+        item.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', !isOpen);
+        const content = item.querySelector('.pdp-accordion-content');
+        if (content && content.style.display) {
+          content.style.removeProperty('display');
+        }
+        const icon = trigger.querySelector('.pdp-acc-icon');
+        if (icon) icon.textContent = isOpen ? '+' : '−';
       });
     });
 
-    // Render Sizes
-    sizeContainer.innerHTML = product.sizes.map((sz, idx) => `
-      <button class="size-pill ${idx === 0 ? 'active' : ''}" data-size="${sz}">${sz}</button>
-    `).join('');
+    // Curated related recommendations
+    if (relatedGrid) {
+      const related = products.filter(p => p.id !== product.id).slice(0, 3);
+      relatedGrid.innerHTML = related.map(rel => `
+        <article class="product-card" data-product-id="${rel.id}">
+          <div class="product-card-img-container">
+            <span class="product-tag-pill">${rel.tag}</span>
+            <img src="${rel.images[0]}" alt="${rel.name}" loading="lazy" />
+            <div class="product-quick-view-overlay">
+              <button class="quick-view-btn" data-product-id="${rel.id}" aria-label="Inspect ${rel.name}">
+                Inspect Piece
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <span class="product-category-meta">${rel.categoryLabel}</span>
+            <h3 class="product-title">${rel.name}</h3>
+            <span class="product-spec">${rel.fabric}</span>
+            <div class="product-price-row">
+              <span class="product-price tabular-nums">${formatPrice(rel.priceNGN, rel.priceUSD)}</span>
+              <span class="product-bespoke-badge">${rel.cut}</span>
+            </div>
+          </div>
+        </article>
+      `).join('');
 
-    sizeContainer.querySelectorAll('.size-pill').forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.selectedSize = btn.dataset.size;
-        sizeContainer.querySelectorAll('.size-pill').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+      relatedGrid.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', () => {
+          navigateToProduct(card.dataset.productId);
+        });
       });
+    }
+
+    // Snappy swipe panel exit on arrival
+    const swipeDir = sessionStorage.getItem('moda_swipe_dir');
+    const panel = document.getElementById('pageSwipePanel');
+    if (panel && swipeDir === 'forward') {
+      sessionStorage.removeItem('moda_swipe_dir');
+      panel.style.transition = 'none';
+      panel.style.transform = 'translateX(0)';
+      panel.offsetHeight;
+      requestAnimationFrame(() => {
+        panel.style.transition = 'transform 220ms cubic-bezier(0.23, 1, 0.32, 1)';
+        panel.style.transform = 'translateX(-100%)';
+      });
+    }
+
+    // Page ready
+    requestAnimationFrame(() => {
+      pdpWrapper.classList.add('page-loaded');
     });
-
-    // Render Tailoring Details
-    detailsContainer.innerHTML = product.details.map(d => `
-      <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.825rem; color: var(--text-secondary);">
-        <span style="color: var(--terracotta);">•</span>
-        <span>${d}</span>
-      </li>
-    `).join('');
-
-    // Open with animation
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function updatePdpPrice() {
-    const priceEl = document.getElementById('pdpPrice');
-    if (!priceEl || !state.selectedProduct) return;
-    priceEl.textContent = formatPrice(state.selectedProduct.priceNGN, state.selectedProduct.priceUSD);
-  }
-
-  function closeProductModal() {
-    const modal = document.getElementById('pdpOverlay');
-    if (!modal) return;
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
   }
 
   // Cart Management
-  function addToCart(product, size, isBespoke) {
-    const existingIndex = state.cart.findIndex(item =>
-      item.id === product.id && item.size === size && item.isBespoke === isBespoke
+  function addToCart(product, size, bespoke) {
+    const existingIndex = state.cart.findIndex(
+      item => item.id === product.id && item.size === size && item.bespoke === bespoke
     );
 
     if (existingIndex > -1) {
@@ -475,7 +666,7 @@
         priceUSD: product.priceUSD,
         image: product.images[0],
         size: size,
-        isBespoke: isBespoke,
+        bespoke: bespoke,
         quantity: 1
       });
     }
@@ -483,22 +674,23 @@
     saveCart();
     renderCart();
     updateCartBadge();
-    showToast(`Added ${product.name} (${size}) to Shopping Bag`);
+    showToast(`Added "${product.name}" to your shopping bag`);
   }
 
-  function updateCartQuantity(index, delta) {
-    if (!state.cart[index]) return;
-    state.cart[index].quantity += delta;
-    if (state.cart[index].quantity <= 0) {
-      state.cart.splice(index, 1);
-    }
+  function removeFromCart(index) {
+    state.cart.splice(index, 1);
     saveCart();
     renderCart();
     updateCartBadge();
+    showToast('Item removed from your bag');
   }
 
-  function removeCartItem(index) {
-    state.cart.splice(index, 1);
+  function updateQuantity(index, delta) {
+    state.cart[index].quantity += delta;
+    if (state.cart[index].quantity <= 0) {
+      removeFromCart(index);
+      return;
+    }
     saveCart();
     renderCart();
     updateCartBadge();
@@ -509,27 +701,25 @@
   }
 
   function updateCartBadge() {
-    const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-    const badges = document.querySelectorAll('.cart-badge');
-    badges.forEach(b => {
-      b.textContent = count;
-      b.style.display = count > 0 ? 'inline-flex' : 'none';
+    const totalCount = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.querySelectorAll('.cart-badge').forEach(badge => {
+      badge.textContent = totalCount;
+      badge.style.display = totalCount > 0 ? 'inline-block' : 'none';
     });
+    const countTag = document.getElementById('cartCountTag');
+    if (countTag) {
+      countTag.textContent = `${totalCount} ${totalCount === 1 ? 'ITEM' : 'ITEMS'}`;
+    }
   }
 
   function renderCart() {
     const list = document.getElementById('cartItemsList');
-    const subtotalEl = document.getElementById('cartSubtotal');
-    const totalEl = document.getElementById('cartTotal');
-    const meterFill = document.getElementById('cartMeterFill');
-    const meterText = document.getElementById('cartMeterText');
-
     if (!list) return;
 
     if (state.cart.length === 0) {
       list.innerHTML = `
         <div class="cart-empty-state">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);">
+          <svg class="cart-empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -538,10 +728,7 @@
           <p class="cart-empty-text">Explore our collection of African Senator suits, Royal Agbadas, and handcrafted Fila caps.</p>
         </div>
       `;
-      if (subtotalEl) subtotalEl.textContent = formatPrice(0, 0);
-      if (totalEl) totalEl.textContent = formatPrice(0, 0);
-      if (meterFill) meterFill.style.width = '0%';
-      if (meterText) meterText.textContent = 'Complimentary shipping applies on orders over ₦200,000 / $150';
+      updateCartTotals(0, 0);
       return;
     }
 
@@ -555,15 +742,15 @@
         </div>
         <div class="cart-item-info">
           <h4 class="cart-item-title">${item.name}</h4>
-          <span class="cart-item-meta">Size: ${item.size} ${item.isBespoke ? '• Bespoke Made-to-Measure' : ''}</span>
+          <span class="cart-item-meta">Size: ${item.size} ${item.bespoke || item.isBespoke ? '• Bespoke Made-to-Measure' : ''}</span>
           <span class="cart-item-price tabular-nums">${formatPrice(item.priceNGN * item.quantity, item.priceUSD * item.quantity)}</span>
           <div class="cart-qty-ctrls">
-            <button class="qty-btn" data-action="dec" data-index="${idx}">−</button>
+            <button class="qty-btn" data-action="dec" data-index="${idx}" aria-label="Decrease quantity">−</button>
             <span class="qty-display tabular-nums">${item.quantity}</span>
-            <button class="qty-btn" data-action="inc" data-index="${idx}">+</button>
+            <button class="qty-btn" data-action="inc" data-index="${idx}" aria-label="Increase quantity">+</button>
           </div>
         </div>
-        <button class="btn-icon" data-action="remove" data-index="${idx}" style="min-width: 32px; min-height: 32px; border: none;" title="Remove item">
+        <button class="btn-icon" data-action="remove" data-index="${idx}" style="min-width: 32px; min-height: 32px; border: none;" title="Remove item" aria-label="Remove item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -577,24 +764,35 @@
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.dataset.index, 10);
         const action = btn.dataset.action;
-        updateCartQuantity(idx, action === 'inc' ? 1 : -1);
+        updateQuantity(idx, action === 'inc' ? 1 : -1);
       });
     });
 
     list.querySelectorAll('[data-action="remove"]').forEach(btn => {
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.dataset.index, 10);
-        removeCartItem(idx);
+        removeFromCart(idx);
       });
     });
 
-    if (subtotalEl) subtotalEl.textContent = formatPrice(subtotalNGN, subtotalUSD);
-    if (totalEl) totalEl.textContent = formatPrice(subtotalNGN, subtotalUSD);
+    updateCartTotals(subtotalNGN, subtotalUSD);
+  }
 
-    // Free Shipping Progress (Threshold: ₦200,000 or $150)
+  function updateCartTotals(subtotalNGN, subtotalUSD) {
+    const subtotalEl = document.getElementById('cartSubtotal');
+    const totalEl = document.getElementById('cartTotal');
+    const formatted = formatPrice(subtotalNGN, subtotalUSD);
+
+    if (subtotalEl) subtotalEl.textContent = formatted;
+    if (totalEl) totalEl.textContent = formatted;
+
+    // Shipping Progress Meter
     const threshold = state.currency === 'USD' ? 150 : 200000;
     const currentVal = state.currency === 'USD' ? subtotalUSD : subtotalNGN;
-    const progress = Math.min(100, Math.round((currentVal / threshold) * 100));
+    const progress = Math.min((currentVal / threshold) * 100, 100);
+
+    const meterFill = document.getElementById('shippingMeterFill') || document.getElementById('cartMeterFill');
+    const meterText = document.getElementById('shippingMeterText') || document.getElementById('cartMeterText');
 
     if (meterFill) meterFill.style.width = `${progress}%`;
     if (meterText) {
@@ -770,29 +968,9 @@
     document.getElementById('cartCloseBtn')?.addEventListener('click', () => toggleCart(false));
     document.getElementById('cartOverlay')?.addEventListener('click', () => toggleCart(false));
 
-    // PDP Modal close & Add to bag
-    document.getElementById('pdpCloseBtn')?.addEventListener('click', closeProductModal);
-    document.getElementById('pdpOverlay')?.addEventListener('click', (e) => {
-      if (e.target.id === 'pdpOverlay') closeProductModal();
-    });
-
-    // Bespoke toggle checkbox inside PDP
-    document.getElementById('pdpBespokeCheck')?.addEventListener('change', (e) => {
-      state.isBespokeFitting = e.target.checked;
-      const note = document.getElementById('bespokeSelectedNote');
-      if (note) note.style.display = e.target.checked ? 'block' : 'none';
-    });
-
-    // Add to Bag Button
-    document.getElementById('pdpAddToBagBtn')?.addEventListener('click', () => {
-      if (!state.selectedProduct) return;
-      addToCart(state.selectedProduct, state.selectedSize || 'Standard', state.isBespokeFitting);
-      closeProductModal();
-      toggleCart(true);
-    });
-
     // Checkout Triggers
     document.getElementById('cartCheckoutBtn')?.addEventListener('click', openCheckout);
+    document.getElementById('checkoutBtn')?.addEventListener('click', openCheckout);
     document.getElementById('checkoutCloseBtn')?.addEventListener('click', closeCheckout);
     document.getElementById('checkoutOverlay')?.addEventListener('click', (e) => {
       if (e.target.id === 'checkoutOverlay') closeCheckout();
@@ -813,10 +991,9 @@
     });
     document.getElementById('consultationForm')?.addEventListener('submit', submitConsultation);
 
-    // Keyboard navigation (Escape to close modals)
+    // Keyboard navigation (Escape to close modals & drawers)
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        closeProductModal();
         toggleCart(false);
         toggleMobileNav(false);
         closeCheckout();
@@ -837,14 +1014,34 @@
       btn.classList.toggle('active', btn.dataset.currency === state.currency);
     });
 
+    // If on index.html: initialize preloader and render catalog
+    initPreloader();
     renderCatalog();
+
+    // Handle reverse swipe exit when returning to index.html
+    const swipeDir = sessionStorage.getItem('moda_swipe_dir');
+    const panel = document.getElementById('pageSwipePanel');
+    if (panel && swipeDir === 'reverse') {
+      sessionStorage.removeItem('moda_swipe_dir');
+      panel.style.borderLeft = 'none';
+      panel.style.borderRight = '2px solid var(--terracotta)';
+      panel.style.transition = 'none';
+      panel.style.transform = 'translateX(0)';
+      panel.offsetHeight;
+      requestAnimationFrame(() => {
+        panel.style.transition = 'transform 220ms cubic-bezier(0.23, 1, 0.32, 1)';
+        panel.style.transform = 'translateX(100%)';
+      });
+    }
+
+    // If on product.html: initialize dedicated product page
+    initProductDetailPage();
+
     renderCart();
     updateCartBadge();
 
-    // Check deep-linked product modal
-    if (paramProduct) {
-      setTimeout(() => openProductModal(paramProduct), 100);
-    } else if (paramCart === 'open') {
+    // Handle deep link testing queries
+    if (paramCart === 'open') {
       if (state.cart.length === 0 && products.length > 0) {
         addToCart(products[0], '40R', false);
       }

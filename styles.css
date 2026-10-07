@@ -3,7 +3,7 @@
    Design Engineering Standards: Emil Kowalski & Jakub Krehel Craft Principles
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
   /* Motion Tokens (Emil Kowalski calibrated physics) */
@@ -98,9 +98,9 @@ body {
 
 /* Typography Standards (Jakub Krehel & Editorial Craft) */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   text-wrap: balance;
   color: var(--text-primary);
 }
@@ -605,9 +605,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .mobile-nav-item {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.35rem;
-  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   padding: 0.75rem 1rem;
   border-radius: 4px;
   color: var(--text-primary);
@@ -797,9 +798,10 @@ main {
 }
 
 .caption-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
@@ -1137,10 +1139,10 @@ main {
 }
 
 .product-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   line-height: 1.25;
 }
@@ -1576,6 +1578,12 @@ main {
   justify-content: space-between;
 }
 
+.cart-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .cart-header-title {
   font-size: 1.25rem;
   font-weight: 600;
@@ -1605,11 +1613,12 @@ main {
 .meter-bar-fill {
   height: 100%;
   background-color: var(--terracotta);
-  width: 65%;
+  width: 0%;
   transition: width var(--duration-hover) var(--ease-out);
 }
 
-.cart-items-list {
+.cart-items-list,
+.cart-items-scroll {
   flex: 1;
   overflow-y: auto;
   padding: 1.25rem 1.5rem;
@@ -1669,9 +1678,10 @@ main {
 }
 
 .cart-item-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .cart-item-meta {
@@ -2261,5 +2271,149 @@ main {
   }
   #consultationOverlay .checkout-card {
     padding: 1.5rem 1rem;
+  }
+}
+
+/* ==========================================================================
+   PAGE PRELOADER & OUTFIT-STYLE TRANSITIONS (Outfit.hellohello.is inspired)
+   ========================================================================== */
+.site-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: transform 650ms var(--ease-out), opacity 650ms var(--ease-out);
+  pointer-events: all;
+  will-change: transform;
+}
+
+.site-preloader.dismissed {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.preloader-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-primary);
+}
+
+.preloader-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  max-width: 90vw;
+}
+
+.preloader-shutter-frame {
+  position: relative;
+  width: min(300px, 72vw);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 6px;
+  outline: 1px solid var(--img-outline);
+  background: var(--bg-secondary);
+  box-shadow: var(--card-shadow);
+}
+
+.shutter-image-stack {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shutter-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 160ms var(--ease-out), transform 350ms var(--ease-out);
+}
+
+.shutter-img.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.preloader-wordmark-mask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.preloader-giant-text {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.2rem, 12vw, 6.2rem);
+  letter-spacing: -0.04em;
+  color: #ede4dd;
+  text-transform: uppercase;
+}
+
+.preloader-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(340px, 85vw);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.875rem;
+}
+
+.preloader-meta-sub, .preloader-meta-loc {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.preloader-counter {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--terracotta);
+}
+
+/* Snappy Editorial Page Swipe Transition (Directional GPU Transform) */
+.page-swipe-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: var(--bg-surface);
+  border-left: 2px solid var(--terracotta);
+  pointer-events: none;
+  transform: translateX(100%);
+  will-change: transform;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.page-swipe-panel.swipe-in {
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.page-swipe-panel.swipe-out-left {
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-swipe-panel {
+    display: none !important;
   }
 }
