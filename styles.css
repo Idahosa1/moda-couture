@@ -650,46 +650,15 @@ main {
 
 .hero-editorial-section {
   position: relative;
-  padding: 2.5rem 1.5rem 3.5rem;
+  padding: 1.5rem 1.5rem 3.5rem;
   width: 100%;
   max-width: 1520px;
   overflow-x: hidden;
   margin: 0 auto;
 }
 
-.hero-masthead-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  font-family: 'Space Grotesk', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--divider);
-}
-
-.masthead-left {
-  text-align: left;
-  flex: 1;
-}
-
-.masthead-center {
-  text-align: center;
-  color: var(--terracotta);
-  font-weight: 700;
-  flex: 1;
-}
-
-.masthead-right {
-  text-align: right;
-  flex: 1;
-}
-
 .hero-monumental-bar {
-  padding: 1.5rem 0 1rem;
+  padding: 0.5rem 0 1rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -2092,14 +2061,6 @@ main {
   .still-crown .editorial-img-wrap {
     height: 440px;
   }
-  .hero-masthead-meta {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    text-align: center;
-  }
-  .masthead-right {
-    text-align: center;
-  }
   .hero-title-subline {
     flex-direction: column;
     gap: 0.5rem;
@@ -2172,17 +2133,6 @@ main {
   }
   .cart-trigger-btn span:not(.cart-badge) {
     display: none;
-  }
-  .hero-masthead-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    text-align: center;
-    font-size: 0.68rem;
-    padding-bottom: 0.85rem;
-  }
-  .masthead-left, .masthead-center, .masthead-right {
-    text-align: center;
   }
   .hero-monumental-wordmark {
     font-size: clamp(3.8rem, 21vw, 6.5rem);
