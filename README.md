@@ -1,6 +1,6 @@
-# MODA COUTURE — Atelier & Luxury African Menswear
+# FACTiO COUTURE — Atelier & Luxury African Menswear
 
-A luxury e-commerce experience crafted for **Moda Couture**, celebrating the sovereign heritage of African tailoring—specializing in bespoke African Senator wears, Grand Agbada robes, and handcrafted Yoruba Fila caps.
+A luxury e-commerce experience crafted for **FACTiO Couture**, celebrating the sovereign heritage of African tailoring—specializing in bespoke African Senator wears, Grand Agbada robes, and handcrafted Yoruba Fila caps.
 
 ---
 
@@ -19,7 +19,7 @@ A luxury e-commerce experience crafted for **Moda Couture**, celebrating the sov
 
 ## 🎨 Brand Identity & Craft Engineering
 
-- **Wordmark**: `MODA` (uppercase, letter-spaced, high-contrast modernist typography).
+- **Wordmark**: `FACTiO` (all letters uppercase except lowercase "i", letter-spaced, high-contrast modernist typography).
 - **Core Color**: Black (`#070707` / `#0A0A0A`) as the anchor of luxury African prestige.
 - **CTA Accent**: **Terracotta** (`#C85A32` / `#B84C26` / `#A13D19`) triggered on hover and click/press (`:hover`, `:active`).
 - **Currencies Supported**:
@@ -56,7 +56,7 @@ A luxury e-commerce experience crafted for **Moda Couture**, celebrating the sov
 5. **Checkout & Order Confirmation**:
    - Multi-field checkout for Nigeria, UK, US, and Worldwide dispatch.
    - Simulation of Paystack, Flutterwave, and card processing.
-   - Order confirmation modal with unique reference ID (`MODA-2026-XXXX`).
+   - Order confirmation modal with unique reference ID (`FACTiO-2026-XXXX`).
 6. **Bespoke Atelier Consultation**:
    - Appointment booking modal for in-person fittings (Lagos Victoria Island or London Mayfair) or virtual video measuring.
 

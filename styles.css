@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MODA COUTURE — Luxury African Menswear & Bespoke Atelier
+   FACTiO COUTURE — Luxury African Menswear & Bespoke Atelier
    Design Engineering Standards: Emil Kowalski & Jakub Krehel Craft Principles
    ========================================================================== */
 
@@ -383,7 +383,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   width: 100%;
 }
 
-/* Wordmark MODA */
+/* Wordmark FACTiO */
 .brand-wordmark {
   text-align: center;
   text-decoration: none;
@@ -673,7 +673,7 @@ main {
   letter-spacing: -0.04em;
   line-height: 0.84;
   color: var(--text-primary);
-  text-transform: uppercase;
+  text-transform: none;
   user-select: none;
   width: 100%;
   margin: 0;
@@ -2312,7 +2312,7 @@ main {
   font-size: clamp(3.2rem, 12vw, 6.2rem);
   letter-spacing: -0.04em;
   color: #ede4dd;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .preloader-meta-bar {

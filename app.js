@@ -1,5 +1,5 @@
 /**
- * MODA COUTURE — Interactive E-Commerce & Atelier Application
+ * FACTiO COUTURE — Interactive E-Commerce & Atelier Application
  * Craft Standards: Emil Kowalski & Jakub Krehel
  * Strictly 2 Fonts: Plus Jakarta Sans & Space Grotesk (Prices & Highlights Only)
  */
@@ -19,12 +19,12 @@
 
   // State Management
   const state = {
-    currency: paramCurrency || localStorage.getItem('moda_currency') || 'NGN',
-    theme: paramTheme || localStorage.getItem('moda_theme') || 'light',
+    currency: paramCurrency || localStorage.getItem('factio_currency') || localStorage.getItem('moda_currency') || 'NGN',
+    theme: paramTheme || localStorage.getItem('factio_theme') || localStorage.getItem('moda_theme') || 'light',
     activeCategory: 'all',
     searchQuery: '',
     sortBy: 'featured',
-    cart: JSON.parse(localStorage.getItem('moda_cart') || '[]'),
+    cart: JSON.parse(localStorage.getItem('factio_cart') || localStorage.getItem('moda_cart') || '[]'),
     selectedProduct: null,
     selectedSize: null,
     isBespokeFitting: false,
@@ -77,7 +77,7 @@
         'Traditional Yoruba Gobi pleat style',
         'Hand-guided bullion wire embroidery',
         'Padded sweatband for all-day comfort',
-        'Moda Couture archival edition'
+        'FACTiO Couture archival edition'
       ]
     },
     {
@@ -218,7 +218,7 @@
       sizes: ['Bespoke Fit'],
       details: [
         '14 individual anatomical measurements drafted on paper',
-        'Direct consultation with Moda Head Tailor',
+        'Direct consultation with FACTiO Head Tailor',
         'Personalized initials embroidered inside placket',
         'Guaranteed fit with complimentary adjustments'
       ]
@@ -268,7 +268,7 @@
 
   function toggleTheme() {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('moda_theme', state.theme);
+    localStorage.setItem('factio_theme', state.theme);
     document.documentElement.setAttribute('data-theme', state.theme);
     updateThemeToggleIcons();
     showToast(`Switched to ${state.theme === 'dark' ? 'Dark Noir' : 'Light Atelier'} theme`);
@@ -292,7 +292,7 @@
   function setCurrency(currency) {
     if (state.currency === currency) return;
     state.currency = currency;
-    localStorage.setItem('moda_currency', currency);
+    localStorage.setItem('factio_currency', currency);
 
     document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.currency === currency);
@@ -311,7 +311,7 @@
   // Snappy Editorial Swipe Page Navigation (Directional GPU Transform)
   function navigateToProduct(productId) {
     const panel = document.getElementById('pageSwipePanel');
-    sessionStorage.setItem('moda_swipe_dir', 'forward');
+    sessionStorage.setItem('factio_swipe_dir', 'forward');
     if (panel) {
       panel.style.borderRight = 'none';
       panel.style.borderLeft = '2px solid var(--terracotta)';
@@ -461,7 +461,7 @@
     state.selectedGalleryImageIndex = 0;
 
     // Set page title
-    document.title = `${product.name} — MODA COUTURE Atelier`;
+    document.title = `${product.name} — FACTiO COUTURE Atelier`;
 
     // Elements
     const titleEl = document.getElementById('pdpTitleText');
@@ -483,7 +483,7 @@
       backBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const panel = document.getElementById('pageSwipePanel');
-        sessionStorage.setItem('moda_swipe_dir', 'reverse');
+        sessionStorage.setItem('factio_swipe_dir', 'reverse');
         if (panel) {
           panel.style.borderLeft = 'none';
           panel.style.borderRight = '2px solid var(--terracotta)';
@@ -559,7 +559,7 @@
 
     // Sizing guide alert
     document.getElementById('pdpSizeGuideBtn')?.addEventListener('click', () => {
-      alert('Moda Couture Atelier Sizing Guide:\n\n38R: Chest 38-40in | Waist 32in | Height 5ft 8in - 5ft 11in\n40R: Chest 40-42in | Waist 34in | Height 5ft 9in - 6ft 1in\n42R: Chest 42-44in | Waist 36in | Height 5ft 10in - 6ft 2in\n44L: Chest 44-46in | Waist 38in | Height 6ft 0in - 6ft 4in\n46L: Chest 46-48in | Waist 40in | Height 6ft 1in - 6ft 5in\n\nFila Caps:\n56cm - 62cm circumference\n\nCustom Made-to-Measure: Tailored to your exact 14-point body measurements.');
+      alert('FACTiO Couture Atelier Sizing Guide:\n\n38R: Chest 38-40in | Waist 32in | Height 5ft 8in - 5ft 11in\n40R: Chest 40-42in | Waist 34in | Height 5ft 9in - 6ft 1in\n42R: Chest 42-44in | Waist 36in | Height 5ft 10in - 6ft 2in\n44L: Chest 44-46in | Waist 38in | Height 6ft 0in - 6ft 4in\n46L: Chest 46-48in | Waist 40in | Height 6ft 1in - 6ft 5in\n\nFila Caps:\n56cm - 62cm circumference\n\nCustom Made-to-Measure: Tailored to your exact 14-point body measurements.');
     });
 
     // Bespoke custom toggle
@@ -631,9 +631,10 @@
     }
 
     // Snappy swipe panel exit on arrival
-    const swipeDir = sessionStorage.getItem('moda_swipe_dir');
+    const swipeDir = sessionStorage.getItem('factio_swipe_dir') || sessionStorage.getItem('moda_swipe_dir');
     const panel = document.getElementById('pageSwipePanel');
     if (panel && swipeDir === 'forward') {
+      sessionStorage.removeItem('factio_swipe_dir');
       sessionStorage.removeItem('moda_swipe_dir');
       panel.style.transition = 'none';
       panel.style.transform = 'translateX(0)';
@@ -697,7 +698,7 @@
   }
 
   function saveCart() {
-    localStorage.setItem('moda_cart', JSON.stringify(state.cart));
+    localStorage.setItem('factio_cart', JSON.stringify(state.cart));
   }
 
   function updateCartBadge() {
@@ -850,7 +851,7 @@
 
   function completeOrder(e) {
     e.preventDefault();
-    const orderNum = 'MODA-' + Math.floor(100000 + Math.random() * 900000);
+    const orderNum = 'FACTiO-' + Math.floor(100000 + Math.random() * 900000);
     const nameInput = document.getElementById('checkoutName');
     const customerName = nameInput ? nameInput.value : 'Valued Patron';
 
@@ -1019,9 +1020,10 @@
     renderCatalog();
 
     // Handle reverse swipe exit when returning to index.html
-    const swipeDir = sessionStorage.getItem('moda_swipe_dir');
+    const swipeDir = sessionStorage.getItem('factio_swipe_dir') || sessionStorage.getItem('moda_swipe_dir');
     const panel = document.getElementById('pageSwipePanel');
     if (panel && swipeDir === 'reverse') {
+      sessionStorage.removeItem('factio_swipe_dir');
       sessionStorage.removeItem('moda_swipe_dir');
       panel.style.borderLeft = 'none';
       panel.style.borderRight = '2px solid var(--terracotta)';
